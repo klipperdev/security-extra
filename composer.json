@@ -1,0 +1,54 @@
+{
+    "name": "klipper/security-extra",
+    "type": "library",
+    "description": "Security Extra component of Klipper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "François Pluchino",
+            "email": "francois.pluchino@klipper.dev"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4.0",
+        "klipper/batch": "^2.0.0",
+        "klipper/choice": "^2.0.0",
+        "klipper/data-loader": "^2.0.0",
+        "klipper/doctrine-extensions-extra": "^2.0.0",
+        "klipper/form": "^2.0.0",
+        "klipper/model": "^2.0.0",
+        "klipper/object": "^2.0.0",
+        "klipper/phone": "^2.0.0",
+        "klipper/uuid": "^2.0.0",
+        "doctrine/orm": "^2.6.0",
+        "klipper/config": "^2.0.0",
+        "klipper/doctrine-extensions": "^2.0.0",
+        "klipper/doctrine-extra": "^2.0.0",
+        "klipper/resource": "^2.0.0",
+        "klipper/security": "^2.0.0",
+        "symfony/dependency-injection": "^4.3.0",
+        "symfony/form": "^4.3.0",
+        "symfony/http-foundation": "^4.3.0",
+        "symfony/property-access": "^4.3.0",
+        "symfony/security-core": "^4.3.0",
+        "symfony/security-http": "^4.3.0",
+        "symfony/translation": "^4.3.0",
+        "symfony/validator": "^4.3.0"
+    },
+    "require-dev": {
+        "willdurand/geocoder": "^4.2.0"
+    },
+    "autoload": {
+        "psr-4": { "Klipper\\Component\\SecurityExtra\\": "" },
+        "exclude-from-classmap": [
+            "**/Tests/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
+}
