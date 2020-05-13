@@ -51,7 +51,7 @@ class SharingValidator extends ConstraintValidator
     protected $registry;
 
     /**
-     * @var OrganizationalContextInterface
+     * @var null|OrganizationalContextInterface
      */
     protected $orgContext;
 
@@ -68,18 +68,18 @@ class SharingValidator extends ConstraintValidator
     /**
      * Constructor.
      *
-     * @param AuthorizationCheckerInterface  $authChecker    The authorization checker
-     * @param TokenStorageInterface          $tokenStorage   The token storage
-     * @param ManagerRegistry                $registry       The doctrine
-     * @param OrganizationalContextInterface $orgContext     The organizational context
-     * @param bool                           $superAdmin     Check if the super admin user can skip this validator
-     * @param string                         $permissionName The name of permission to check the authorization to manage the sharings
+     * @param AuthorizationCheckerInterface       $authChecker    The authorization checker
+     * @param TokenStorageInterface               $tokenStorage   The token storage
+     * @param ManagerRegistry                     $registry       The doctrine
+     * @param null|OrganizationalContextInterface $orgContext     The organizational context
+     * @param bool                                $superAdmin     Check if the super admin user can skip this validator
+     * @param string                              $permissionName The name of permission to check the authorization to manage the sharings
      */
     public function __construct(
         AuthorizationCheckerInterface $authChecker,
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $registry,
-        OrganizationalContextInterface $orgContext,
+        ?OrganizationalContextInterface $orgContext = null,
         bool $superAdmin = true,
         string $permissionName = 'manage-sharings'
     ) {
@@ -144,6 +144,10 @@ class SharingValidator extends ConstraintValidator
      */
     public function isOrganizationAdmin(SharingInterface $sharing): bool
     {
+        if (null === $this->orgContext) {
+            return false;
+        }
+
         $orgUser = $this->orgContext->getCurrentOrganizationUser();
 
         return ClassUtil::isInstanceOf($sharing->getSubjectClass(), OrganizationalInterface::class)
@@ -160,7 +164,8 @@ class SharingValidator extends ConstraintValidator
     protected function validateIdentity(SharingInterface $sharing): bool
     {
         if ($this->isRequiredOrganizationContext($sharing->getIdentityClass())) {
-            if (null !== $this->orgContext->getCurrentOrganization()
+            if (null !== $this->orgContext
+                    && null !== $this->orgContext->getCurrentOrganization()
                     && !$this->orgContext->getCurrentOrganization()->isUserOrganization()) {
                 $suffix = '__'.strtoupper($this->orgContext->getCurrentOrganization()->getName());
                 $name = $sharing->getIdentityName();

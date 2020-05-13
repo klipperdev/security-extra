@@ -26,16 +26,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SharingIdentityTypeType extends AbstractType
 {
     /**
-     * @var OrganizationalContextInterface
+     * @var null|OrganizationalContextInterface
      */
     private $orgContext;
 
     /**
      * Constructor.
      *
-     * @param OrganizationalContextInterface $orgContext The organizational context
+     * @param null|OrganizationalContextInterface $orgContext The organizational context
      */
-    public function __construct(OrganizationalContextInterface $orgContext)
+    public function __construct(?OrganizationalContextInterface $orgContext)
     {
         $this->orgContext = $orgContext;
     }
@@ -74,7 +74,7 @@ class SharingIdentityTypeType extends AbstractType
      */
     private function filter(array $identifiers): array
     {
-        if (!$this->orgContext->isOrganization()) {
+        if (null !== $this->orgContext && !$this->orgContext->isOrganization()) {
             $list = $identifiers;
             $identifiers = [];
 
