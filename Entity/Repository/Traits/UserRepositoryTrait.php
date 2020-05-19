@@ -15,6 +15,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Klipper\Component\Security\Model\OrganizationInterface;
+use Klipper\Component\Security\Model\UserInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * User repository class.
@@ -60,6 +62,32 @@ trait UserRepositoryTrait
         }
 
         return $res;
+    }
+
+    /**
+     * @see UserLoaderInterface::loadUserByUsername()
+     *
+     * @param mixed $username
+     */
+    public function loadUserByUsername($username): ?UserInterface
+    {
+        $res = $this->findByUsernames([$username]);
+
+        return 1 === \count($res) ? $res[0] : null;
+    }
+
+    /**
+     * @see UserRepositoryInterface::findByUsernames
+     */
+    public function findByUsernames(array $usernames): array
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u')
+            ->andWhere('u.username IN (:usernames)')
+            ->setParameter('usernames', $usernames)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
