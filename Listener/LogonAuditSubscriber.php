@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Listener;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Geocoder\ProviderAggregator;
 use Klipper\Component\DoctrineExtra\Util\ManagerUtils;
 use Klipper\Component\Security\Model\UserInterface;

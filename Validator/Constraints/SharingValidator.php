@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtra\Util\ManagerUtils;
 use Klipper\Component\Object\Util\ClassUtil;
 use Klipper\Component\Security\Model\OrganizationUserInterface;

@@ -11,8 +11,8 @@
 
 namespace Klipper\Component\SecurityExtra\Doctrine\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Klipper\Component\DoctrineExtensions\Util\SqlFilterUtil;
 use Klipper\Component\DoctrineExtra\Util\ManagerUtils;
 use Klipper\Component\Security\Model\OrganizationInterface;
