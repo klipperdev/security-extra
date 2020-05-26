@@ -81,16 +81,16 @@ interface LogonAuditInterface extends IdInterface
     /**
      * Set the logged at.
      *
-     * @param null|\DateTime $loggedAt The logged at
+     * @param null|\DateTimeInterface $loggedAt The logged at
      *
      * @return static
      */
-    public function setLoggedAt(?\DateTime $loggedAt);
+    public function setLoggedAt(?\DateTimeInterface $loggedAt);
 
     /**
      * Get the logged at.
      */
-    public function getLoggedAt(): ?\DateTime;
+    public function getLoggedAt(): ?\DateTimeInterface;
 
     /**
      * Set the IP.
@@ -213,7 +213,7 @@ interface LogonAuditInterface extends IdInterface
      *
      * @return static
      */
-    public function setPostalCode($postalCode);
+    public function setPostalCode(?string $postalCode);
 
     /**
      * Get the postal code.

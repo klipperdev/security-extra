@@ -20,10 +20,7 @@ use Klipper\Component\Security\Model\UserInterface;
  */
 trait UserableTrait
 {
-    /**
-     * @var null|UserInterface
-     */
-    protected $user;
+    protected ?UserInterface $user = null;
 
     /**
      * {@inheritdoc}

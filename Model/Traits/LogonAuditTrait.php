@@ -27,116 +27,84 @@ trait LogonAuditTrait
     protected $userId;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string")
      */
-    protected $username;
+    protected ?string $username = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string")
      */
-    protected $host;
+    protected ?string $host = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string")
      */
-    protected $uri;
+    protected ?string $uri = null;
 
     /**
-     * @var null|\DateTime
-     *
      * @ORM\Column(type="datetime")
      */
-    protected $loggedAt;
+    protected ?\DateTimeInterface $loggedAt = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string")
      */
-    protected $ip;
+    protected ?string $ip = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string")
      */
-    protected $userAgent;
+    protected ?string $userAgent = null;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="json")
      */
-    protected $languages = [];
+    protected array $languages = [];
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $timezone;
+    protected ?string $timezone = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $countryCode;
+    protected ?string $countryCode = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $countryName;
+    protected ?string $countryName = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $adminLevelCode;
+    protected ?string $adminLevelCode = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $adminLevelName;
+    protected ?string $adminLevelName = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $postalCode;
+    protected ?string $postalCode = null;
 
     /**
-     * @var null|string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $locality;
+    protected ?string $locality = null;
 
     /**
-     * @var null|float
-     *
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
-     * @var null|float
-     *
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
      * {@inheritdoc}
@@ -231,7 +199,7 @@ trait LogonAuditTrait
      *
      * @see LogonAuditInterface::setLoggedAt()
      */
-    public function setLoggedAt(?\DateTime $loggedAt): self
+    public function setLoggedAt(?\DateTimeInterface $loggedAt): self
     {
         $this->loggedAt = $loggedAt;
 
@@ -243,7 +211,7 @@ trait LogonAuditTrait
      *
      * @see LogonAuditInterface::getLoggedAt()
      */
-    public function getLoggedAt(): ?\DateTime
+    public function getLoggedAt(): ?\DateTimeInterface
     {
         return $this->loggedAt;
     }

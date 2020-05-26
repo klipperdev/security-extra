@@ -23,9 +23,9 @@ interface UserableEditableInterface extends UserableInterface
     /**
      * Set the user.
      *
-     * @param UserInterface $user The user
+     * @param null|UserInterface $user The user
      *
      * @return static
      */
-    public function setUser(UserInterface $user);
+    public function setUser(?UserInterface $user);
 }

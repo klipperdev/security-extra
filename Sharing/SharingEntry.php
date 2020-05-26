@@ -269,14 +269,14 @@ class SharingEntry implements SharingEntryInterface
     /**
      * Build the active value.
      *
-     * @param bool           $enabled      Check if the sharing is enabled
-     * @param null|\DateTime $startedAt    The started datetime
-     * @param null|\DateTime $endedAt      The ended datetime
-     * @param bool           $isInvitation Check if it's an invitation
+     * @param bool                    $enabled      Check if the sharing is enabled
+     * @param null|\DateTimeInterface $startedAt    The started datetime
+     * @param null|\DateTimeInterface $endedAt      The ended datetime
+     * @param bool                    $isInvitation Check if it's an invitation
      *
      * @throws
      */
-    private function buildActive(bool $enabled, ?\DateTime $startedAt, ?\DateTime $endedAt, bool $isInvitation = false): bool
+    private function buildActive(bool $enabled, ?\DateTimeInterface $startedAt, ?\DateTimeInterface $endedAt, bool $isInvitation = false): bool
     {
         $now = new \DateTime();
 
