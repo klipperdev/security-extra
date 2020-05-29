@@ -93,7 +93,7 @@ class PermissionValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->authChecker->isGranted('perm_'.$this->permissionName)) {
+        if (!$this->authChecker->isGranted('perm:'.$this->permissionName)) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation()
             ;

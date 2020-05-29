@@ -72,7 +72,7 @@ class PermissionCheckerTypeExtension extends AbstractTypeExtension
             foreach ($form->all() as $name => $child) {
                 $field = (string) $child->getConfig()->getOption('property_path', $name);
 
-                if (!$this->checker->isGranted('perm_edit', new FieldVote($class, $field))) {
+                if (!$this->checker->isGranted('perm:edit', new FieldVote($class, $field))) {
                     if ($options['permission_remove_fields']) {
                         $form->remove($name);
                     } else {

@@ -130,7 +130,7 @@ class SharingValidator extends ConstraintValidator
         }
 
         if (!$this->validateIdentity($value)
-                || !$this->authChecker->isGranted('perm_'.$this->permissionName, $value->getSubjectClass())) {
+                || !$this->authChecker->isGranted('perm:'.$this->permissionName, $value->getSubjectClass())) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation()
             ;
