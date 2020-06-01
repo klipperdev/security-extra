@@ -13,6 +13,7 @@ namespace Klipper\Component\SecurityExtra\Validator\Constraints;
 
 use Klipper\Component\Security\Model\PermissionInterface;
 use Klipper\Component\Security\Model\Traits\RoleableInterface;
+use Klipper\Component\Security\Permission\PermVote;
 use Klipper\Component\SecurityExtra\Exception\UnexpectedTypeException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -93,7 +94,7 @@ class PermissionValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->authChecker->isGranted('perm:'.$this->permissionName)) {
+        if (!$this->authChecker->isGranted(new PermVote($this->permissionName))) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation()
             ;

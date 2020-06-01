@@ -12,6 +12,7 @@
 namespace Klipper\Component\SecurityExtra\Form\Extension;
 
 use Klipper\Component\Security\Permission\FieldVote;
+use Klipper\Component\Security\Permission\PermVote;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -72,7 +73,7 @@ class PermissionCheckerTypeExtension extends AbstractTypeExtension
             foreach ($form->all() as $name => $child) {
                 $field = (string) $child->getConfig()->getOption('property_path', $name);
 
-                if (!$this->checker->isGranted('perm:edit', new FieldVote($class, $field))) {
+                if (!$this->checker->isGranted(new PermVote('edit'), new FieldVote($class, $field))) {
                     if ($options['permission_remove_fields']) {
                         $form->remove($name);
                     } else {

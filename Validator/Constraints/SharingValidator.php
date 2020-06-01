@@ -20,6 +20,7 @@ use Klipper\Component\Security\Model\Traits\OnlyOrganizationInterface;
 use Klipper\Component\Security\Model\Traits\OrganizationalInterface;
 use Klipper\Component\Security\Model\Traits\RoleableInterface;
 use Klipper\Component\Security\Organizational\OrganizationalContextInterface;
+use Klipper\Component\Security\Permission\PermVote;
 use Klipper\Component\SecurityExtra\Exception\UnexpectedTypeException;
 use Klipper\Component\SecurityExtra\Model\Traits\OwnerableInterface;
 use Klipper\Component\SecurityExtra\Model\Traits\OwnerableOptionalInterface;
@@ -130,7 +131,7 @@ class SharingValidator extends ConstraintValidator
         }
 
         if (!$this->validateIdentity($value)
-                || !$this->authChecker->isGranted('perm:'.$this->permissionName, $value->getSubjectClass())) {
+                || !$this->authChecker->isGranted(new PermVote($this->permissionName), $value->getSubjectClass())) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation()
             ;
