@@ -46,13 +46,12 @@ trait OrganizationUserRepositoryTrait
 
         if ($user instanceof UserInterface) {
             $result = $this->createQueryBuilder('uo')
-                ->addSelect('o, s, u, g')
+                ->addSelect('o, u, g')
                 ->where('uo.user = :userId')
                 ->andWhere('o.name = :organizationName')
                 ->leftJoin('uo.organization', 'o', Join::WITH, 'o.id = uo.organization')
                 ->leftJoin('uo.user', 'u', Join::WITH, 'u.id = uo.user')
                 ->leftJoin('uo.groups', 'g', Join::WITH, 'g.organization = uo.organization')
-                ->leftJoin('o.setting', 's', Join::WITH, 's.organization = uo.organization')
                 ->setParameter('userId', $user->getId())
                 ->setParameter('organizationName', $organizationName)
                 ->getQuery()
