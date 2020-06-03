@@ -22,19 +22,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class OrganizationalOptionalFilterSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var OrganizationalContextInterface
-     */
-    protected $context;
+    protected OrganizationalContextInterface $context;
+
+    protected string $parameter;
 
     /**
-     * @var string
-     */
-    protected $parameter;
-
-    /**
-     * Constructor.
-     *
      * @param OrganizationalContextInterface $context   The organizational context
      * @param string                         $parameter The parameter name in request
      */
@@ -44,9 +36,6 @@ class OrganizationalOptionalFilterSubscriber implements EventSubscriberInterface
         $this->parameter = $parameter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

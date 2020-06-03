@@ -19,14 +19,9 @@ use Symfony\Component\Config\Loader\Loader;
  */
 class OptionalAllFilterClassesConfigurationLoader extends Loader
 {
-    /**
-     * @var OptionalAllFilterClassesConfigCollection
-     */
-    protected $classes;
+    protected OptionalAllFilterClassesConfigCollection $classes;
 
     /**
-     * Constructor.
-     *
      * @param string[] $classes The class names
      */
     public function __construct(array $classes = [])
@@ -38,18 +33,12 @@ class OptionalAllFilterClassesConfigurationLoader extends Loader
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load($resource, $type = null): OptionalAllFilterClassesConfigCollection
+    public function load($resource, string $type = null): OptionalAllFilterClassesConfigCollection
     {
         return $this->classes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports($resource, $type = null): bool
+    public function supports($resource, string $type = null): bool
     {
         return 'config' === $type;
     }

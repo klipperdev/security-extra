@@ -36,8 +36,6 @@ use Klipper\Component\SecurityExtra\Entity\Repository\OrganizationUserRepository
 trait OrganizationUserRepositoryTrait
 {
     /**
-     * {@inheritdoc}
-     *
      * @see OrganizationUserRepositoryInterface::findCurrentOrganizationUserByOrganizationName
      */
     public function findCurrentOrganizationUserByOrganizationName(string $organizationName, ?UserInterface $user): ?OrganizationUserInterface
@@ -68,8 +66,6 @@ trait OrganizationUserRepositoryTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see OrganizationUserRepositoryInterface::createQueryForOrgUsersByOrg
      */
     public function createQueryForOrgUsersByOrg(?OrganizationInterface $org): QueryBuilder
@@ -89,8 +85,6 @@ trait OrganizationUserRepositoryTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see OrganizationUserRepositoryInterface::getOrderedOrganizations
      */
     public function getOrderedOrganizations(): array
@@ -108,8 +102,6 @@ trait OrganizationUserRepositoryTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see OrganizationUserRepositoryInterface::findAdminByOrganizationIds
      */
     public function findAdminByOrganizationIds(array $organizationsIds): array
@@ -131,9 +123,9 @@ trait OrganizationUserRepositoryTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see OrganizationUserRepositoryInterface::findOrganizationUserById
+     *
+     * @param mixed $id
      */
     public function findOrganizationUserById($id): ?OrganizationUserInterface
     {

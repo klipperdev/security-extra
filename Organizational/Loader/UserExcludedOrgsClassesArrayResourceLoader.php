@@ -21,18 +21,15 @@ use Klipper\Component\SecurityExtra\Organizational\UserExcludedOrgsClassesConfig
 class UserExcludedOrgsClassesArrayResourceLoader extends AbstractArrayResourceLoader
 {
     /**
-     * {@inheritdoc}
+     * @param mixed $resource
      *
      * @return ConfigCollectionInterface|UserExcludedOrgsClassesConfigCollection
      */
-    public function load($resource, $type = null): UserExcludedOrgsClassesConfigCollection
+    public function load($resource, string $type = null): UserExcludedOrgsClassesConfigCollection
     {
         return parent::load($resource, $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigCollection(): ConfigCollectionInterface
     {
         return new UserExcludedOrgsClassesConfigCollection();

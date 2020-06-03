@@ -22,17 +22,11 @@ trait UserableTrait
 {
     protected ?UserInterface $user = null;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUserId()
     {
         return null !== $this->getUser()

@@ -36,39 +36,19 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class SharingValidator extends ConstraintValidator
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $authChecker;
+    protected AuthorizationCheckerInterface $authChecker;
+
+    protected TokenStorageInterface $tokenStorage;
+
+    protected ManagerRegistry $registry;
+
+    protected ?OrganizationalContextInterface $orgContext;
+
+    protected bool $superAdmin;
+
+    protected string $permissionName;
 
     /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
-
-    /**
-     * @var ManagerRegistry
-     */
-    protected $registry;
-
-    /**
-     * @var null|OrganizationalContextInterface
-     */
-    protected $orgContext;
-
-    /**
-     * @var bool
-     */
-    protected $superAdmin;
-
-    /**
-     * @var string
-     */
-    protected $permissionName;
-
-    /**
-     * Constructor.
-     *
      * @param AuthorizationCheckerInterface       $authChecker    The authorization checker
      * @param TokenStorageInterface               $tokenStorage   The token storage
      * @param ManagerRegistry                     $registry       The doctrine

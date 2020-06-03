@@ -19,8 +19,6 @@ use Klipper\Component\Config\ConfigCollectionInterface;
 class ExcludedClassesConfigCollection extends AbstractClassesConfigCollection
 {
     /**
-     * {@inheritdoc}
-     *
      * @param ConfigCollectionInterface|ExcludedClassesConfigCollection $collection The collection
      */
     public function addCollection(ConfigCollectionInterface $collection): void

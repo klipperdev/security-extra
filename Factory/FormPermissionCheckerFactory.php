@@ -24,10 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class FormPermissionCheckerFactory implements SecurityFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
+    public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint): array
     {
         $providerId = 'klipper_security_extra.authentication.provider.permission_checker.'.$id;
         $container
@@ -43,25 +40,16 @@ class FormPermissionCheckerFactory implements SecurityFactoryInterface
         return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPosition(): string
     {
         return 'http';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKey(): string
     {
         return 'form_permission_checker';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(NodeDefinition $builder)
     {
         /* @var ArrayNodeDefinition $builder */

@@ -34,9 +34,6 @@ class UsernameSameOrgName extends Constraint
         return $this->service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

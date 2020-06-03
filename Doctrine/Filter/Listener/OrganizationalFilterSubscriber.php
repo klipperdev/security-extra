@@ -27,39 +27,28 @@ use Klipper\Component\SecurityExtra\Organizational\OrganizationalFilterFactoryIn
  */
 class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
 {
-    /**
-     * @var OrganizationalContextInterface
-     */
-    private $orgContext;
+    private OrganizationalContextInterface $orgContext;
 
-    /**
-     * @var null|OrganizationalFilterFactoryInterface
-     */
-    private $factory;
+    private ?OrganizationalFilterFactoryInterface $factory;
 
     /**
      * @var string[]
      */
-    private $excludedClasses = [];
+    private array $excludedClasses = [];
 
     /**
      * @var string[]
      */
-    private $userExcludedOrgsClasses = [];
+    private array $userExcludedOrgsClasses = [];
 
     /**
      * @var string[]
      */
-    private $optionalFilterAllClasses = [];
+    private array $optionalFilterAllClasses = [];
+
+    private bool $initialized = false;
 
     /**
-     * @var bool
-     */
-    private $initialized = false;
-
-    /**
-     * Constructor.
-     *
      * @param EntityManagerInterface                    $entityManager The entity manager
      * @param OrganizationalContextInterface            $orgContext    The security organizational context
      * @param null|OrganizationalFilterFactoryInterface $factory       The organizational filter factory
@@ -75,17 +64,11 @@ class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
         $this->factory = $factory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function supports(): string
     {
         return OrganizationalFilter::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function injectParameters(SQLFilter $filter): void
     {
         $this->init();

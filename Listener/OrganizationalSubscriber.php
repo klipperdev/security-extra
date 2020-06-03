@@ -22,14 +22,9 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class OrganizationalSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var OrganizationalContextHelper
-     */
-    protected $helper;
+    protected OrganizationalContextHelper $helper;
 
     /**
-     * Constructor.
-     *
      * @param OrganizationalContextHelper $helper The helper of organizational context
      */
     public function __construct(OrganizationalContextHelper $helper)
@@ -37,9 +32,6 @@ class OrganizationalSubscriber implements EventSubscriberInterface
         $this->helper = $helper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

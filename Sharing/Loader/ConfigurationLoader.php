@@ -20,14 +20,9 @@ use Symfony\Component\Config\Loader\Loader;
  */
 class ConfigurationLoader extends Loader
 {
-    /**
-     * @var SharingEntryConfigInterface[]
-     */
-    protected $configs;
+    protected SharingEntryConfigCollection $configs;
 
     /**
-     * Constructor.
-     *
      * @param SharingEntryConfigInterface[] $configs The sharing entry configs
      */
     public function __construct(array $configs = [])
@@ -40,17 +35,14 @@ class ConfigurationLoader extends Loader
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $resource
      */
-    public function load($resource, $type = null): SharingEntryConfigCollection
+    public function load($resource, string $type = null): SharingEntryConfigCollection
     {
         return $this->configs;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports($resource, $type = null): bool
+    public function supports($resource, string $type = null): bool
     {
         return 'config' === $type;
     }

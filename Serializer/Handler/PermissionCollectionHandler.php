@@ -23,14 +23,9 @@ use Klipper\Component\SecurityExtra\Serializer\Type\PermissionCollection;
  */
 class PermissionCollectionHandler implements SubscribingHandlerInterface
 {
-    /**
-     * @var PermissionMetadataManagerInterface
-     */
-    private $pmManager;
+    private PermissionMetadataManagerInterface $pmManager;
 
     /**
-     * Constructor.
-     *
      * @param PermissionMetadataManagerInterface $pmManager The permission metadata manager
      */
     public function __construct(PermissionMetadataManagerInterface $pmManager)

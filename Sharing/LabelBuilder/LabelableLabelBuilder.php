@@ -20,17 +20,12 @@ use Klipper\Component\SecurityExtra\Sharing\SharingEntryLabelBuilderInterface;
  */
 class LabelableLabelBuilder implements SharingEntryLabelBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(object $identity, SharingInterface $sharing): bool
     {
         return $identity instanceof LabelableInterface;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param LabelableInterface $identity
      */
     public function buildLabel(object $identity, SharingInterface $sharing): string

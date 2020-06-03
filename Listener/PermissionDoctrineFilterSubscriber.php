@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Listener;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Klipper\Component\DoctrineExtensions\Util\SqlFilterUtil;
 use Klipper\Component\Security\Event\PostLoadPermissionsEvent;
 use Klipper\Component\Security\Event\PreLoadPermissionsEvent;
@@ -22,24 +22,19 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class PermissionDoctrineFilterSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
+    protected ObjectManager $objectManager;
 
     /**
      * @var string[]
      */
-    protected $filters = [];
+    protected array $filters = [];
 
     /**
      * @var string[]
      */
-    protected $currentFilters = [];
+    protected array $currentFilters = [];
 
     /**
-     * Constructor.
-     *
      * @param ObjectManager $objectManager The doctrine object manager
      * @param string[]      $filters       The doctrine sql filters
      */
@@ -51,9 +46,6 @@ class PermissionDoctrineFilterSubscriber implements EventSubscriberInterface
             : $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

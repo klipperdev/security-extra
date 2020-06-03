@@ -26,14 +26,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class OrganizationUserFilterSubscriber extends AbstractTokenUserFilterSubscriber
 {
-    /**
-     * @var OrganizationalContextInterface
-     */
-    private $orgContext;
+    private OrganizationalContextInterface $orgContext;
 
     /**
-     * Constructor.
-     *
      * @param EntityManagerInterface         $entityManager The entity manager
      * @param TokenStorageInterface          $tokenStorage  The token storage
      * @param OrganizationalContextInterface $orgContext    The organizational context
@@ -48,17 +43,11 @@ class OrganizationUserFilterSubscriber extends AbstractTokenUserFilterSubscriber
         $this->orgContext = $orgContext;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function supports(): string
     {
         return OrganizationUserFilter::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function injectParameters(SQLFilter $filter): void
     {
         parent::injectParameters($filter);
@@ -72,9 +61,6 @@ class OrganizationUserFilterSubscriber extends AbstractTokenUserFilterSubscriber
         $filter->setParameter('organization_id', $orgId, \is_string($orgId) ? Type::GUID : null);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getTokenUserId()
     {
         $userId = parent::getTokenUserId();

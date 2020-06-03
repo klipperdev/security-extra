@@ -21,18 +21,15 @@ use Klipper\Component\SecurityExtra\Sharing\SharingEntryConfigCollection;
 class ArrayResourceLoader extends AbstractArrayResourceLoader
 {
     /**
-     * {@inheritdoc}
+     * @param mixed $resource
      *
      * @return ConfigCollectionInterface|SharingEntryConfigCollection
      */
-    public function load($resource, $type = null): SharingEntryConfigCollection
+    public function load($resource, string $type = null): SharingEntryConfigCollection
     {
         return parent::load($resource, $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigCollection(): ConfigCollectionInterface
     {
         return new SharingEntryConfigCollection();

@@ -22,14 +22,9 @@ use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
  */
 class CacheOrganizationalFilterFactory extends AbstractCache implements OrganizationalFilterFactoryInterface, WarmableInterface
 {
-    /**
-     * @var OrganizationalFilterFactoryInterface
-     */
-    protected $factory;
+    protected OrganizationalFilterFactoryInterface $factory;
 
     /**
-     * Constructor.
-     *
      * @param OrganizationalFilterFactoryInterface $factory The organizational filter factory
      * @param array                                $options An array of options
      */
@@ -41,8 +36,6 @@ class CacheOrganizationalFilterFactory extends AbstractCache implements Organiza
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return ConfigCollectionInterface|ExcludedClassesConfigCollection
      */
     public function createExcludedClasses(): ExcludedClassesConfigCollection
@@ -57,8 +50,6 @@ class CacheOrganizationalFilterFactory extends AbstractCache implements Organiza
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return ConfigCollectionInterface|UserExcludedOrgsClassesConfigCollection
      */
     public function createUserExcludedOrgsClasses(): UserExcludedOrgsClassesConfigCollection
@@ -73,8 +64,6 @@ class CacheOrganizationalFilterFactory extends AbstractCache implements Organiza
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return ConfigCollectionInterface|OptionalAllFilterClassesConfigCollection
      */
     public function createOptionalAllFilterClasses(): OptionalAllFilterClassesConfigCollection
@@ -89,7 +78,7 @@ class CacheOrganizationalFilterFactory extends AbstractCache implements Organiza
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $cacheDir
      */
     public function warmUp($cacheDir): void
     {

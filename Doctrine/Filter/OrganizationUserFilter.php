@@ -29,14 +29,12 @@ class OrganizationUserFilter extends AbstractFilter
      *
      * @param bool $isCurrentOrganizations The value
      */
-    public function setCurrentOrganizations($isCurrentOrganizations): void
+    public function setCurrentOrganizations(bool $isCurrentOrganizations): void
     {
         $this->setParameter('is_current_organizations', (bool) $isCurrentOrganizations, 'boolean');
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function supports(ClassMetadata $targetEntity): bool
@@ -50,8 +48,6 @@ class OrganizationUserFilter extends AbstractFilter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string

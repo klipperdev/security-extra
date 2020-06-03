@@ -22,19 +22,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class DomainOrganizationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var PermissionManagerInterface
-     */
-    protected $permissionManager;
+    protected PermissionManagerInterface $permissionManager;
+
+    protected bool $pmEnabled = true;
 
     /**
-     * @var bool
-     */
-    protected $pmEnabled = true;
-
-    /**
-     * Constructor.
-     *
      * @param PermissionManagerInterface $permissionManager The permission manager
      */
     public function __construct(PermissionManagerInterface $permissionManager)
@@ -42,9 +34,6 @@ class DomainOrganizationSubscriber implements EventSubscriberInterface
         $this->permissionManager = $permissionManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

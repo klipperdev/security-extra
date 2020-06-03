@@ -34,8 +34,6 @@ class SharingEntryConfigCollection extends AbstractConfigCollection
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return SharingEntryConfigInterface[]
      */
     public function all(): array
@@ -68,8 +66,6 @@ class SharingEntryConfigCollection extends AbstractConfigCollection
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param ConfigCollectionInterface|SharingEntryConfigCollection $collection The sharing entry collection
      */
     public function addCollection(ConfigCollectionInterface $collection): void

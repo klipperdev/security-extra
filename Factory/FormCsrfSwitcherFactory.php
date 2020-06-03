@@ -24,10 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class FormCsrfSwitcherFactory implements SecurityFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
+    public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint): array
     {
         $providerId = 'klipper_security_extra.authentication.provider.form_csrf_switcher.'.$id;
         $container
@@ -43,25 +40,16 @@ class FormCsrfSwitcherFactory implements SecurityFactoryInterface
         return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPosition(): string
     {
         return 'http';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKey(): string
     {
         return 'form_csrf';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(NodeDefinition $builder)
     {
         /* @var ArrayNodeDefinition $builder */

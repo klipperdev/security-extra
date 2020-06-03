@@ -22,9 +22,6 @@ use Klipper\Component\Security\Model\Traits\RoleableInterface;
  */
 class RoleableSubscriber implements EventSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [

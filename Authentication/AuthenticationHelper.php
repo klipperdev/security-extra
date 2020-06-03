@@ -22,15 +22,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  */
 class AuthenticationHelper
 {
-    /**
-     * @var AuthenticationTrustResolverInterface
-     */
-    protected $trustResolver;
+    protected AuthenticationTrustResolverInterface $trustResolver;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
+    protected TokenStorageInterface $tokenStorage;
 
     /**
      * @param AuthenticationTrustResolverInterface $trustResolver The authentication trust resolver

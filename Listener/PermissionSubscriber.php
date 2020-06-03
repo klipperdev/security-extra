@@ -24,19 +24,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class PermissionSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
+
+    protected TokenStorageInterface $tokenStorage;
 
     /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
-
-    /**
-     * Constructor.
-     *
      * @param RequestStack          $requestStack The request stack
      * @param TokenStorageInterface $tokenStorage The token storage
      */
@@ -46,9 +38,6 @@ class PermissionSubscriber implements EventSubscriberInterface
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

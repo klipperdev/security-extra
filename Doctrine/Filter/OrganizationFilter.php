@@ -25,8 +25,6 @@ use Klipper\Component\Security\Model\OrganizationUserInterface;
 class OrganizationFilter extends AbstractFilter
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function supports(ClassMetadata $targetEntity): bool
@@ -37,8 +35,6 @@ class OrganizationFilter extends AbstractFilter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string

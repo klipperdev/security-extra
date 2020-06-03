@@ -34,49 +34,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrganizationSubscriber implements EventSubscriber
 {
-    /**
-     * @var ContainerInterface
-     */
-    public $container;
+    public ?ContainerInterface $container = null;
+
+    protected TokenStorageInterface $tokenStorage;
+
+    protected TranslatorInterface $translator;
+
+    protected string $orgClass;
+
+    protected ?DomainInterface $domainRole = null;
+
+    protected ?DomainInterface $domainOrgUser = null;
+
+    protected ?ValidatorInterface $validator = null;
 
     /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var string
-     */
-    protected $orgClass;
-
-    /**
-     * @var string
-     */
-    protected $settingClass;
-
-    /**
-     * @var null|DomainInterface
-     */
-    protected $domainRole;
-
-    /**
-     * @var null|DomainInterface
-     */
-    protected $domainOrgUser;
-
-    /**
-     * @var ValidatorInterface
-     */
-    protected $validator;
-
-    /**
-     * Constructor.
-     *
      * @param TokenStorageInterface $tokenStorage The token storage
      * @param TranslatorInterface   $translator   The translator
      * @param string                $orgClass     The organization class name
@@ -91,9 +63,6 @@ class OrganizationSubscriber implements EventSubscriber
         $this->orgClass = $orgClass;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [

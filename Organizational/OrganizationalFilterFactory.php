@@ -20,20 +20,11 @@ use Symfony\Component\Config\Loader\LoaderInterface;
  */
 class OrganizationalFilterFactory implements OrganizationalFilterFactoryInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    protected $excludedLoader;
+    protected LoaderInterface $excludedLoader;
 
-    /**
-     * @var LoaderInterface
-     */
-    protected $userExcludedOrgsLoader;
+    protected LoaderInterface $userExcludedOrgsLoader;
 
-    /**
-     * @var LoaderInterface
-     */
-    protected $optionalAllFilterLoader;
+    protected LoaderInterface $optionalAllFilterLoader;
 
     /**
      * @var mixed
@@ -41,8 +32,6 @@ class OrganizationalFilterFactory implements OrganizationalFilterFactoryInterfac
     protected $resource;
 
     /**
-     * Constructor.
-     *
      * @param LoaderInterface $excludedLoader          The loader of organizational filter excluded classes
      * @param LoaderInterface $userExcludedOrgsLoader  The loader of organizational filter user excluded classes
      * @param LoaderInterface $optionalAllFilterLoader The loader of organizational filter optional all filter classes
@@ -61,8 +50,6 @@ class OrganizationalFilterFactory implements OrganizationalFilterFactoryInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     public function createExcludedClasses(): ExcludedClassesConfigCollection
@@ -71,8 +58,6 @@ class OrganizationalFilterFactory implements OrganizationalFilterFactoryInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     public function createUserExcludedOrgsClasses(): UserExcludedOrgsClassesConfigCollection
@@ -81,8 +66,6 @@ class OrganizationalFilterFactory implements OrganizationalFilterFactoryInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     public function createOptionalAllFilterClasses(): OptionalAllFilterClassesConfigCollection

@@ -21,19 +21,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class OrganizationalContextListener
 {
-    /**
-     * @var OrganizationalContextHelper
-     */
-    protected $helper;
+    protected OrganizationalContextHelper $helper;
+
+    protected array $config;
 
     /**
-     * @var array
-     */
-    protected $config;
-
-    /**
-     * Constructor.
-     *
      * @param OrganizationalContextHelper $helper The helper of organizational context
      * @param array                       $config The config defined in firewall
      */

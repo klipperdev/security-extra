@@ -31,34 +31,17 @@ use Klipper\Component\Security\Permission\PermissionManagerInterface;
  */
 class RoleRename
 {
-    /**
-     * @var PermissionManagerInterface
-     */
-    protected $permissionManager;
+    protected PermissionManagerInterface $permissionManager;
+
+    protected DomainInterface $domainUser;
+
+    protected DomainInterface $domainGroup;
+
+    protected DomainInterface $domainOrgUser;
+
+    protected int $batchSize;
 
     /**
-     * @var DomainInterface
-     */
-    protected $domainUser;
-
-    /**
-     * @var DomainInterface
-     */
-    protected $domainGroup;
-
-    /**
-     * @var DomainInterface
-     */
-    protected $domainOrgUser;
-
-    /**
-     * @var int
-     */
-    protected $batchSize;
-
-    /**
-     * Constructor.
-     *
      * @param DomainManagerInterface     $domainManager     The domain manager
      * @param PermissionManagerInterface $permissionManager The permission manager
      * @param int                        $batchSize         The batch size
@@ -158,8 +141,8 @@ class RoleRename
                     $res->getConstraintViolationList()->addAll($resBatch->getErrors());
                 }
             }
-        } catch (\Exception $e) {
-            $res->setException($e);
+        } catch (\Throwable $e) {
+            $res->setThrowable($e);
         }
 
         $this->permissionManager->setEnabled($pmEnabled);

@@ -31,19 +31,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrganizationalSubscriber implements EventSubscriber
 {
-    /**
-     * @var OrganizationalContextInterface
-     */
-    protected $context;
+    protected OrganizationalContextInterface $context;
+
+    protected TranslatorInterface $translator;
 
     /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * Constructor.
-     *
      * @param OrganizationalContextInterface $context    The security organizational context
      * @param TranslatorInterface            $translator The translator
      */
@@ -55,9 +47,6 @@ class OrganizationalSubscriber implements EventSubscriber
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [

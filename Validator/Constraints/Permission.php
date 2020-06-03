@@ -22,11 +22,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class Permission extends Constraint
 {
-    public $message = 'permission.manipulation.access_deny';
+    public string $message = 'permission.manipulation.access_deny';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

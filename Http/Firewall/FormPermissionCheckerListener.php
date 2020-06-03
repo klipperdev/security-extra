@@ -19,19 +19,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class FormPermissionCheckerListener
 {
-    /**
-     * @var PermissionCheckerTypeExtension
-     */
-    protected $typeExtension;
+    protected PermissionCheckerTypeExtension $typeExtension;
+
+    protected array $config;
 
     /**
-     * @var array
-     */
-    protected $config;
-
-    /**
-     * Constructor.
-     *
      * @param PermissionCheckerTypeExtension $typeExtension The form type extension
      * @param array                          $config        The config defined in firewall
      */

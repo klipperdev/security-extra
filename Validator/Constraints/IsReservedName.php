@@ -22,14 +22,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class IsReservedName extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'This value is already used.';
+    public string $message = 'This value is already used.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy(): string
     {
         return 'klipper_security_extra.validator.reserved_name';

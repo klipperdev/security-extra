@@ -27,64 +27,35 @@ class SharingEntry implements SharingEntryInterface
      */
     protected $id;
 
-    /**
-     * @var SharingInterface
-     */
-    protected $sharing;
+    protected SharingInterface $sharing;
 
-    /**
-     * @var object
-     */
-    protected $subject;
+    protected object $subject;
 
-    /**
-     * @var object
-     */
-    protected $identity;
+    protected object $identity;
 
-    /**
-     * @var string
-     */
-    protected $label;
+    protected string $label;
 
     /**
      * @var RoleInterface[]
      */
-    protected $roles;
+    protected array $roles;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
-    /**
-     * @var bool
-     */
-    protected $enabled;
+    protected bool $enabled;
 
     /**
      * @var PermissionInterface[]
      */
-    protected $permissions = [];
+    protected array $permissions;
+
+    protected ?\DateTime $startedAt;
+
+    protected ?\DateTime $endedAt;
+
+    protected bool $active;
 
     /**
-     * @var null|\DateTime
-     */
-    protected $startedAt;
-
-    /**
-     * @var null|\DateTime
-     */
-    protected $endedAt;
-
-    /**
-     * @var bool
-     */
-    protected $active;
-
-    /**
-     * Constructor.
-     *
      * @param SharingInterface $sharing  The sharing
      * @param object           $subject  The subject
      * @param object           $identity The identity
@@ -117,89 +88,56 @@ class SharingEntry implements SharingEntryInterface
         $this->active = $this->buildActive($this->enabled, $this->startedAt, $this->endedAt, $isInvitation);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSharing(): SharingInterface
     {
         return $this->sharing;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubject(): object
     {
         return $this->subject;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentity(): object
     {
         return $this->identity;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentityClass(): string
     {
         return ClassUtils::getClass($this->identity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPermissions(): array
     {
         return $this->permissions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRoles(): array
     {
         return $this->roles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRoleNames(): array
     {
         $roles = [];
@@ -211,25 +149,16 @@ class SharingEntry implements SharingEntryInterface
         return $roles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getStartedAt(): ?\DateTime
     {
         return $this->startedAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEndedAt(): ?\DateTime
     {
         return $this->endedAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isActive(): bool
     {
         return $this->active;

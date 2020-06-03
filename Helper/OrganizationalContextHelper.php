@@ -44,34 +44,17 @@ class OrganizationalContextHelper
      */
     public const TYPE_BOTH = 'both';
 
-    /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
+    protected TokenStorageInterface $tokenStorage;
+
+    protected PermissionManagerInterface $permissionManager;
+
+    protected OrganizationUserRepositoryInterface $orgUserRepository;
+
+    protected OrganizationalContextInterface $context;
+
+    protected ?string $routeParameterName = null;
 
     /**
-     * @var PermissionManagerInterface
-     */
-    protected $permissionManager;
-
-    /**
-     * @var OrganizationUserRepositoryInterface
-     */
-    protected $orgUserRepository;
-
-    /**
-     * @var OrganizationalContextInterface
-     */
-    protected $context;
-
-    /**
-     * @var null|string
-     */
-    protected $routeParameterName;
-
-    /**
-     * Constructor.
-     *
      * @param TokenStorageInterface          $tokenStorage      The token storage
      * @param PermissionManagerInterface     $permissionManager The permission manager
      * @param ManagerRegistry                $doctrine          The doctrine
@@ -146,7 +129,7 @@ class OrganizationalContextHelper
      *
      * @param string $organizationName The current organization name
      */
-    public function getCurrentOrganizationUser($organizationName): ?OrganizationUserInterface
+    public function getCurrentOrganizationUser(string $organizationName): ?OrganizationUserInterface
     {
         $orgUser = null;
 

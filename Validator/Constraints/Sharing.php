@@ -22,11 +22,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class Sharing extends Constraint
 {
-    public $message = 'sharing.manipulation.access_deny';
+    public string $message = 'sharing.manipulation.access_deny';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

@@ -25,14 +25,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SharingIdentityTypeType extends AbstractType
 {
-    /**
-     * @var null|OrganizationalContextInterface
-     */
-    private $orgContext;
+    private ?OrganizationalContextInterface $orgContext;
 
     /**
-     * Constructor.
-     *
      * @param null|OrganizationalContextInterface $orgContext The organizational context
      */
     public function __construct(?OrganizationalContextInterface $orgContext)
@@ -40,9 +35,6 @@ class SharingIdentityTypeType extends AbstractType
         $this->orgContext = $orgContext;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -51,17 +43,11 @@ class SharingIdentityTypeType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'sharing_identity_type';

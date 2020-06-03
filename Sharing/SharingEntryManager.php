@@ -31,44 +31,27 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class SharingEntryManager implements SharingEntryManagerInterface
 {
-    /**
-     * @var DomainManagerInterface
-     */
-    protected $domainManager;
+    protected DomainManagerInterface $domainManager;
 
-    /**
-     * @var null|SharingEntryFactoryInterface
-     */
-    protected $factory;
+    protected ?SharingEntryFactoryInterface $factory;
 
     /**
      * @var SharingEntryLabelBuilderInterface[]
      */
-    protected $labelBuilders;
+    protected array $labelBuilders;
 
-    /**
-     * @var string
-     */
-    protected $roleClass;
+    protected ?string $roleClass = null;
 
     /**
      * @var SharingEntryConfigInterface[]
      */
-    protected $configs = [];
+    protected array $configs = [];
+
+    private PropertyAccessorInterface $propertyAccessor;
+
+    private bool $initialized = false;
 
     /**
-     * @var PropertyAccessorInterface
-     */
-    private $propertyAccessor;
-
-    /**
-     * @var bool
-     */
-    private $initialized = false;
-
-    /**
-     * Constructor.
-     *
      * @param DomainManagerInterface              $domainManager    The domain manager
      * @param null|SharingEntryFactoryInterface   $factory          The sharing entry factory
      * @param SharingEntryLabelBuilderInterface[] $labelBuilders    The sharing entry label builders
@@ -83,12 +66,9 @@ class SharingEntryManager implements SharingEntryManagerInterface
         $this->domainManager = $domainManager;
         $this->factory = $factory;
         $this->labelBuilders = $labelBuilders;
-        $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
+        $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(SharingEntryConfigInterface $config): self
     {
         $this->configs[$config->getType()] = $config;
@@ -96,9 +76,6 @@ class SharingEntryManager implements SharingEntryManagerInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSharingEntries(array $sharings): array
     {
         $this->init();

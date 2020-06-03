@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Doctrine\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraint;
 class RoleUniqueEntityValidator extends OrganizationalUniqueEntityValidator
 {
     /**
-     * {@inheritdoc}
+     * @param mixed $entity
      */
     protected function getCriteria($entity, Constraint $constraint, ObjectManager $em): array
     {

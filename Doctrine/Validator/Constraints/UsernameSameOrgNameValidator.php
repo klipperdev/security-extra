@@ -11,8 +11,8 @@
 
 namespace Klipper\Component\SecurityExtra\Doctrine\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Klipper\Component\DoctrineExtensions\Util\SqlFilterUtil;
 use Klipper\Component\DoctrineExtra\Util\ManagerUtils;
 use Klipper\Component\Security\Model\OrganizationInterface;
@@ -27,24 +27,13 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UsernameSameOrgNameValidator extends ConstraintValidator
 {
-    /**
-     * @var string
-     */
-    protected $orgClass;
+    protected string $orgClass;
+
+    protected ObjectManager $om;
+
+    protected OrganizationRepositoryInterface $repo;
 
     /**
-     * @var ObjectManager
-     */
-    protected $om;
-
-    /**
-     * @var OrganizationRepositoryInterface
-     */
-    protected $repo;
-
-    /**
-     * Constructor.
-     *
      * @param ManagerRegistry $registry          The doctrine registry
      * @param string          $organizationClass The class name of organization entity
      */
@@ -52,11 +41,6 @@ class UsernameSameOrgNameValidator extends ConstraintValidator
     {
         $this->orgClass = $organizationClass;
         $this->om = ManagerUtils::getRequiredManager($registry, $organizationClass);
-
-        if (null === $this->om) {
-            throw new InvalidArgumentException(sprintf('The object manager for the class "%s" does not exist', $organizationClass));
-        }
-
         $this->repo = $this->om->getRepository($organizationClass);
 
         if (!$this->repo instanceof OrganizationRepositoryInterface) {

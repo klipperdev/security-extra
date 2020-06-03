@@ -21,9 +21,6 @@ use Klipper\Component\Security\PermissionContexts;
  */
 final class PermissionContext implements ChoiceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function listIdentifiers(): array
     {
         return [
@@ -33,17 +30,11 @@ final class PermissionContext implements ChoiceInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getValues(): array
     {
         return array_keys(static::listIdentifiers());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getTranslationDomain(): string
     {
         return 'choices';

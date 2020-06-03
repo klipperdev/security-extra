@@ -21,18 +21,15 @@ use Klipper\Component\SecurityExtra\Organizational\OptionalAllFilterClassesConfi
 class OptionalAllFilterClassesArrayResourceLoader extends AbstractArrayResourceLoader
 {
     /**
-     * {@inheritdoc}
+     * @param mixed $resource
      *
      * @return ConfigCollectionInterface|OptionalAllFilterClassesConfigCollection
      */
-    public function load($resource, $type = null): OptionalAllFilterClassesConfigCollection
+    public function load($resource, string $type = null): OptionalAllFilterClassesConfigCollection
     {
         return parent::load($resource, $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigCollection(): ConfigCollectionInterface
     {
         return new OptionalAllFilterClassesConfigCollection();

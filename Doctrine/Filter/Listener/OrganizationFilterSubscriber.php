@@ -18,9 +18,6 @@ use Klipper\Component\SecurityExtra\Doctrine\Filter\OrganizationFilter;
  */
 class OrganizationFilterSubscriber extends AbstractTokenUserFilterSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function supports(): string
     {
         return OrganizationFilter::class;

@@ -24,9 +24,6 @@ use Klipper\Component\SecurityExtra\Sharing\SharingEntryInterface;
  */
 class SharingEntrySerializerSubscriber implements EventSubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

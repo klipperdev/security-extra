@@ -22,19 +22,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RoleFilterSubscriber extends AbstractFilterSubscriber
 {
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
     /**
      * @var string[]
      */
-    protected $excludedRoles;
+    protected array $excludedRoles;
 
     /**
-     * Constructor.
-     *
      * @param EntityManagerInterface $entityManager The entity manager
      * @param RequestStack           $requestStack  The token storage
      * @param string[]               $excludedRoles The excluded roles
@@ -50,17 +45,11 @@ class RoleFilterSubscriber extends AbstractFilterSubscriber
         $this->excludedRoles = $excludedRoles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function supports(): string
     {
         return RoleFilter::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function injectParameters(SQLFilter $filter): void
     {
         $filter->setParameter('excluded_roles', $this->excludedRoles, 'array');

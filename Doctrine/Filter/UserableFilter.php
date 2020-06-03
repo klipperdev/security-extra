@@ -24,8 +24,6 @@ use Klipper\Component\SecurityExtra\Model\Traits\UserableInterface;
 class UserableFilter extends AbstractFilter
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function supports(ClassMetadata $targetEntity): bool
@@ -39,9 +37,6 @@ class UserableFilter extends AbstractFilter
             && null !== $this->getRealParameter('user_id');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string
     {
         $column = $targetEntity->getColumnName('user_id');

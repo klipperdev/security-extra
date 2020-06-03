@@ -18,10 +18,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
  */
 class SharingEntryFactory implements SharingEntryFactoryInterface
 {
-    /**
-     * @var LoaderInterface
-     */
-    protected $loader;
+    protected LoaderInterface $loader;
 
     /**
      * @var mixed
@@ -29,8 +26,6 @@ class SharingEntryFactory implements SharingEntryFactoryInterface
     protected $resource;
 
     /**
-     * Constructor.
-     *
      * @param LoaderInterface $loader   The sharing entry loader
      * @param mixed           $resource The main resource to load
      */
@@ -41,8 +36,6 @@ class SharingEntryFactory implements SharingEntryFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     public function createConfigurations(): SharingEntryConfigCollection

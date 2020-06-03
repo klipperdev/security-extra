@@ -22,22 +22,18 @@ use Klipper\Component\Config\Annotation\AbstractAnnotation;
 class SharingEntry extends AbstractAnnotation
 {
     /**
-     * @var string
-     *
      * @Required
      */
-    protected $field;
+    protected ?string $field = null;
 
     /**
-     * @var null|string
-     *
      * @Required
      */
-    protected $repositoryMethod;
+    protected ?string $repositoryMethod = null;
 
     public function getField(): string
     {
-        return $this->field;
+        return (string) $this->field;
     }
 
     public function setField(string $field): void

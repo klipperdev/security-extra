@@ -38,34 +38,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UserSubscriber implements EventSubscriber
 {
-    /**
-     * @var ContainerInterface
-     */
-    public $container;
+    public ?ContainerInterface $container = null;
+
+    protected TranslatorInterface $translator;
+
+    protected ?ValidatorInterface $validator = null;
+
+    protected ?DomainManagerInterface $domainManager = null;
+
+    protected string $orgClass;
 
     /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var null|ValidatorInterface
-     */
-    protected $validator;
-
-    /**
-     * @var DomainManagerInterface
-     */
-    protected $domainManager;
-
-    /**
-     * @var string
-     */
-    protected $orgClass;
-
-    /**
-     * Constructor.
-     *
      * @param TranslatorInterface $translator The translator
      * @param string              $orgClass   The organization class name
      */
@@ -77,9 +60,6 @@ class UserSubscriber implements EventSubscriber
         $this->orgClass = $orgClass;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [

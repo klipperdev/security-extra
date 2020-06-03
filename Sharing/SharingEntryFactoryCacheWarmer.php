@@ -18,9 +18,6 @@ use Klipper\Component\Security\CacheWarmer\AbstractCacheWarmer;
  */
 class SharingEntryFactoryCacheWarmer extends AbstractCacheWarmer
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedServices(): array
     {
         return [

@@ -21,17 +21,12 @@ use Klipper\Component\Uuid\Util\UuidUtil;
  */
 class UsernameLabelBuilder implements SharingEntryLabelBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(object $identity, SharingInterface $sharing): bool
     {
         return $identity instanceof UserInterface && !UuidUtil::isV4($identity->getUsername());
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param UserInterface $identity
      */
     public function buildLabel(object $identity, SharingInterface $sharing): string

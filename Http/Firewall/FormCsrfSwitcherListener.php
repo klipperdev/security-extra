@@ -19,19 +19,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class FormCsrfSwitcherListener
 {
-    /**
-     * @var CsrfSwitcherTypeExtension
-     */
-    protected $typeExtension;
+    protected CsrfSwitcherTypeExtension $typeExtension;
+
+    protected array $config;
 
     /**
-     * @var array
-     */
-    protected $config;
-
-    /**
-     * Constructor.
-     *
      * @param CsrfSwitcherTypeExtension $typeExtension The form type extension
      * @param array                     $config        The config defined in firewall
      */

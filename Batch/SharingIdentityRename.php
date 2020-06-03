@@ -29,29 +29,15 @@ use Klipper\Component\Security\Sharing\SharingManagerInterface;
  */
 class SharingIdentityRename
 {
-    /**
-     * @var PermissionManagerInterface
-     */
-    protected $permissionManager;
+    protected PermissionManagerInterface $permissionManager;
+
+    protected SharingManagerInterface $sharingManager;
+
+    protected DomainInterface $domainSharing;
+
+    protected int $batchSize;
 
     /**
-     * @var SharingManagerInterface
-     */
-    protected $sharingManager;
-
-    /**
-     * @var DomainInterface
-     */
-    protected $domainSharing;
-
-    /**
-     * @var int
-     */
-    protected $batchSize;
-
-    /**
-     * Constructor.
-     *
      * @param DomainManagerInterface     $domainManager     The domain manager
      * @param PermissionManagerInterface $permissionManager The permission manager
      * @param SharingManagerInterface    $sharingManager    The sharing manager
@@ -124,8 +110,8 @@ class SharingIdentityRename
                 $resBatch = $this->domainSharing->updates($entities);
                 $res->getConstraintViolationList()->addAll($resBatch->getErrors());
             }
-        } catch (\Exception $e) {
-            $res->setException($e);
+        } catch (\Throwable $e) {
+            $res->setThrowable($e);
         }
 
         $this->permissionManager->setEnabled($pmEnabled);

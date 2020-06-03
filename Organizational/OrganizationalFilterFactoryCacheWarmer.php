@@ -18,9 +18,6 @@ use Klipper\Component\Security\CacheWarmer\AbstractCacheWarmer;
  */
 class OrganizationalFilterFactoryCacheWarmer extends AbstractCacheWarmer
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedServices(): array
     {
         return [

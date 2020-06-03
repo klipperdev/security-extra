@@ -40,29 +40,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 abstract class AbstractSharingType extends AbstractType
 {
-    /**
-     * @var OrganizationalRouting
-     */
-    protected $orgRouting;
+    protected OrganizationalRouting $orgRouting;
+
+    protected OrganizationalContextInterface $orgContext;
+
+    protected DomainManagerInterface $domainManager;
+
+    protected ValidatorInterface $validator;
 
     /**
-     * @var OrganizationalContextInterface
-     */
-    protected $orgContext;
-
-    /**
-     * @var DomainManagerInterface
-     */
-    protected $domainManager;
-
-    /**
-     * @var ValidatorInterface
-     */
-    protected $validator;
-
-    /**
-     * Constructor.
-     *
      * @param OrganizationalRouting          $orgRouting    The organizational routing
      * @param OrganizationalContextInterface $orgContext    The organizational context
      * @param DomainManagerInterface         $domainManager The domain manager
@@ -80,9 +66,6 @@ abstract class AbstractSharingType extends AbstractType
         $this->validator = $validator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $domainManager = $this->domainManager;
@@ -252,9 +235,6 @@ abstract class AbstractSharingType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -272,9 +252,6 @@ abstract class AbstractSharingType extends AbstractType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'sharing';

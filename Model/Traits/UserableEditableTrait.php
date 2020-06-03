@@ -22,9 +22,6 @@ trait UserableEditableTrait
 {
     use UserableTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUser(?UserInterface $user): self
     {
         $this->user = $user;

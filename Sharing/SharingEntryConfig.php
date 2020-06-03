@@ -18,24 +18,13 @@ use Klipper\Component\SecurityExtra\Exception\InvalidArgumentException;
  */
 class SharingEntryConfig implements SharingEntryConfigInterface
 {
-    /**
-     * @var string
-     */
-    private $type;
+    private string $type;
+
+    private string $field;
+
+    private ?string $repositoryMethod;
 
     /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var null|string
-     */
-    private $repositoryMethod;
-
-    /**
-     * Constructor.
-     *
      * @param string      $type             The type. Typically, this is the PHP class name
      * @param string      $field            The field name to be using to find the instances
      * @param null|string $repositoryMethod The name of repository method
@@ -47,33 +36,21 @@ class SharingEntryConfig implements SharingEntryConfigInterface
         $this->repositoryMethod = $repositoryMethod;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getField(): string
     {
         return $this->field;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRepositoryMethod(): ?string
     {
         return $this->repositoryMethod;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function merge(SharingEntryConfigInterface $newConfig): void
     {
         if ($this->getType() !== $newConfig->getType()) {

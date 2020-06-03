@@ -30,24 +30,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GroupSubscriber implements EventSubscriber
 {
-    /**
-     * @var ContainerInterface
-     */
-    public $container;
+    public ?ContainerInterface $container = null;
+
+    protected TranslatorInterface $translator;
+
+    protected ?PermissionManagerInterface $permissionManager = null;
 
     /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var PermissionManagerInterface
-     */
-    protected $permissionManager;
-
-    /**
-     * Constructor.
-     *
      * @param TranslatorInterface $translator The translator
      */
     public function __construct(TranslatorInterface $translator)
@@ -55,9 +44,6 @@ class GroupSubscriber implements EventSubscriber
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [

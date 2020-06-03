@@ -19,8 +19,6 @@ use Klipper\Component\Config\ConfigCollectionInterface;
 class OptionalAllFilterClassesConfigCollection extends AbstractClassesConfigCollection
 {
     /**
-     * {@inheritdoc}
-     *
      * @param ConfigCollectionInterface|OptionalAllFilterClassesConfigCollection $collection The collection
      */
     public function addCollection(ConfigCollectionInterface $collection): void

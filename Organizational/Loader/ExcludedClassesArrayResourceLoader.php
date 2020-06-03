@@ -21,18 +21,15 @@ use Klipper\Component\SecurityExtra\Organizational\ExcludedClassesConfigCollecti
 class ExcludedClassesArrayResourceLoader extends AbstractArrayResourceLoader
 {
     /**
-     * {@inheritdoc}
+     * @param mixed $resource
      *
      * @return ConfigCollectionInterface|ExcludedClassesConfigCollection
      */
-    public function load($resource, $type = null): ExcludedClassesConfigCollection
+    public function load($resource, string $type = null): ExcludedClassesConfigCollection
     {
         return parent::load($resource, $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createConfigCollection(): ConfigCollectionInterface
     {
         return new ExcludedClassesConfigCollection();

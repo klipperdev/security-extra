@@ -11,8 +11,8 @@
 
 namespace Klipper\Component\SecurityExtra\Doctrine\Validator\Constraints;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Klipper\Component\DoctrineExtensions\Validator\Constraints\UniqueEntityValidator;
 use Klipper\Component\Security\Organizational\OrganizationalContextInterface;
 use Symfony\Component\Validator\Constraint;
@@ -24,14 +24,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class OrganizationalUniqueEntityValidator extends UniqueEntityValidator
 {
-    /**
-     * @var OrganizationalContextInterface
-     */
-    protected $orgContext;
+    protected OrganizationalContextInterface $orgContext;
 
-    /**
-     * Constructor.
-     */
     public function __construct(ManagerRegistry $registry, OrganizationalContextInterface $orgContext)
     {
         parent::__construct($registry);
@@ -40,7 +34,7 @@ class OrganizationalUniqueEntityValidator extends UniqueEntityValidator
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $entity
      */
     protected function getCriteria($entity, Constraint $constraint, ObjectManager $em): array
     {

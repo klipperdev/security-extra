@@ -28,15 +28,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class PermissionCheckerTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $checker;
+    protected AuthorizationCheckerInterface $checker;
 
-    /**
-     * @var null|bool
-     */
-    private $enabled = false;
+    private bool $enabled = false;
 
     public function __construct(AuthorizationCheckerInterface $checker)
     {
@@ -53,9 +47,6 @@ class PermissionCheckerTypeExtension extends AbstractTypeExtension
         $this->enabled = $enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (!$options['permission_checker']) {
@@ -91,9 +82,6 @@ class PermissionCheckerTypeExtension extends AbstractTypeExtension
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -105,9 +93,6 @@ class PermissionCheckerTypeExtension extends AbstractTypeExtension
         $resolver->addAllowedTypes('permission_remove_fields', 'bool');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

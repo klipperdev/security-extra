@@ -27,29 +27,15 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class PermissionValidator extends ConstraintValidator
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $authChecker;
+    protected AuthorizationCheckerInterface $authChecker;
+
+    protected TokenStorageInterface $tokenStorage;
+
+    protected bool $superAdmin;
+
+    protected string $permissionName;
 
     /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
-
-    /**
-     * @var bool
-     */
-    protected $superAdmin;
-
-    /**
-     * @var string
-     */
-    protected $permissionName;
-
-    /**
-     * Constructor.
-     *
      * @param AuthorizationCheckerInterface $authChecker    The authorization checker
      * @param TokenStorageInterface         $tokenStorage   The token storage
      * @param bool                          $superAdmin     Check if the super admin user can skip this validator

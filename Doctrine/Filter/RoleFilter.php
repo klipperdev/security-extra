@@ -24,8 +24,6 @@ use Klipper\Component\Security\Model\RoleInterface;
 class RoleFilter extends AbstractFilter
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function supports(ClassMetadata $targetEntity): bool
@@ -37,10 +35,7 @@ class RoleFilter extends AbstractFilter
             && !empty($this->getRealParameter('excluded_roles'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function doAddFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
+    protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string
     {
         return "{$targetTableAlias}.{$targetEntity->getColumnName('name')} NOT IN ({$this->buildRoleNamesQuery()})";
     }

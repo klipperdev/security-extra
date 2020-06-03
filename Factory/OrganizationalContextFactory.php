@@ -24,10 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class OrganizationalContextFactory implements SecurityFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
+    public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint): array
     {
         $providerId = 'klipper_security_extra.authentication.provider.organizational_context.'.$id;
         $container
@@ -43,25 +40,16 @@ class OrganizationalContextFactory implements SecurityFactoryInterface
         return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPosition(): string
     {
         return 'http';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKey(): string
     {
         return 'org_context';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(NodeDefinition $builder)
     {
         /* @var ArrayNodeDefinition $builder */

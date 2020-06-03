@@ -22,14 +22,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 abstract class AbstractTokenUserFilterSubscriber extends AbstractFilterSubscriber
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     /**
-     * Constructor.
-     *
      * @param EntityManagerInterface $entityManager The entity manager
      * @param TokenStorageInterface  $tokenStorage  The token storage
      */
@@ -42,9 +37,6 @@ abstract class AbstractTokenUserFilterSubscriber extends AbstractFilterSubscribe
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function injectParameters(SQLFilter $filter): void
     {
         $filter->setParameter('user_id', $this->getTokenUserId());

@@ -27,41 +27,24 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class LogonAuditSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ManagerRegistry
-     */
-    protected $registry;
+    protected ManagerRegistry $registry;
+
+    protected string $logonAuditClass;
+
+    protected ?ProviderAggregator $geocoder = null;
+
+    protected ?string $provider = null;
+
+    protected ?LoggerInterface $logger;
 
     /**
-     * @var string
-     */
-    protected $logonAuditClass;
-
-    /**
-     * @var null|ProviderAggregator
-     */
-    protected $geocoder;
-
-    /**
-     * @var null|string
-     */
-    protected $provider;
-
-    /**
-     * @var null|LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * Constructor.
-     *
      * @param ManagerRegistry      $registry        The doctrine registry
      * @param null|LoggerInterface $logger          The logger of security
      * @param string               $logonAuditClass The logon audit class name
      */
     public function __construct(
         ManagerRegistry $registry,
-        LoggerInterface $logger = null,
+        ?LoggerInterface $logger = null,
         $logonAuditClass = LogonAuditInterface::class
     ) {
         $this->registry = $registry;
@@ -69,9 +52,6 @@ class LogonAuditSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -127,7 +107,7 @@ class LogonAuditSubscriber implements EventSubscriberInterface
             $this->addGeocodeFields($audit);
             $om->persist($audit);
             $om->flush();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             if ($this->logger) {
                 $this->logger->critical($e->getMessage(), ['exception' => $e]);
             }

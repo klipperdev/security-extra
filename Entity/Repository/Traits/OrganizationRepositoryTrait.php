@@ -31,8 +31,6 @@ use Klipper\Component\SecurityExtra\Entity\Repository\OrganizationRepositoryInte
 trait OrganizationRepositoryTrait
 {
     /**
-     * {@inheritdoc}
-     *
      * @see OrganizationRepositoryInterface::findByNames()
      */
     public function findByNames(array $names): array

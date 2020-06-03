@@ -18,9 +18,6 @@ use Klipper\Component\SecurityExtra\Doctrine\Filter\UserableFilter;
  */
 class UserableFilterSubscriber extends AbstractTokenUserFilterSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function supports(): string
     {
         return UserableFilter::class;

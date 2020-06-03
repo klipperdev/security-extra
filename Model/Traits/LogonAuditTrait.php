@@ -107,9 +107,9 @@ trait LogonAuditTrait
     protected ?float $longitude = null;
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setUserId()
+     *
+     * @param mixed $userId
      */
     public function setUserId($userId)
     {
@@ -119,8 +119,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getUserId()
      */
     public function getUserId()
@@ -129,8 +127,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setUsername()
      */
     public function setUsername(?string $username): self
@@ -141,8 +137,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getUsername()
      */
     public function getUsername(): ?string
@@ -151,8 +145,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setHost()
      */
     public function setHost(?string $host): self
@@ -163,8 +155,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getHost()
      */
     public function getHost(): ?string
@@ -173,8 +163,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setUri()
      */
     public function setUri(?string $uri): self
@@ -185,8 +173,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getUri()
      */
     public function getUri(): ?string
@@ -195,8 +181,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setLoggedAt()
      */
     public function setLoggedAt(?\DateTimeInterface $loggedAt): self
@@ -207,8 +191,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getLoggedAt()
      */
     public function getLoggedAt(): ?\DateTimeInterface
@@ -217,8 +199,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setIp()
      */
     public function setIp(?string $ip): self
@@ -229,8 +209,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getIp()
      */
     public function getIp(): ?string
@@ -239,8 +217,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setUserAgent()
      */
     public function setUserAgent(?string $userAgent): self
@@ -251,8 +227,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getUserAgent()
      */
     public function getUserAgent(): ?string
@@ -261,8 +235,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setLanguages()
      */
     public function setLanguages(array $languages): self
@@ -273,8 +245,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getLanguages()
      */
     public function getLanguages(): array
@@ -283,8 +253,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setTimezone()
      */
     public function setTimezone(?string $timezone): self
@@ -295,8 +263,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getTimezone()
      */
     public function getTimezone(): ?string
@@ -305,8 +271,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setCountryCode()
      */
     public function setCountryCode(?string $countryCode): self
@@ -317,8 +281,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getCountryCode()
      */
     public function getCountryCode(): ?string
@@ -327,8 +289,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setCountryName()
      */
     public function setCountryName(?string $countryName): self
@@ -339,8 +299,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getCountryName()
      */
     public function getCountryName(): ?string
@@ -349,8 +307,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setAdminLevelCode()
      */
     public function setAdminLevelCode(?string $adminLevelCode): self
@@ -361,8 +317,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getAdminLevelCode()
      */
     public function getAdminLevelCode(): ?string
@@ -371,8 +325,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setAdminLevelName()
      */
     public function setAdminLevelName(?string $adminLevelName): self
@@ -383,8 +335,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getAdminLevelName()
      */
     public function getAdminLevelName(): ?string
@@ -393,8 +343,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setPostalCode()
      */
     public function setPostalCode(?string $postalCode): self
@@ -405,8 +353,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getPostalCode()
      */
     public function getPostalCode(): ?string
@@ -415,8 +361,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setLocality()
      */
     public function setLocality(?string $locality): self
@@ -427,8 +371,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getLocality()
      */
     public function getLocality(): ?string
@@ -437,8 +379,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setLatitude()
      */
     public function setLatitude(?float $latitude): self
@@ -449,8 +389,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getLatitude()
      */
     public function getLatitude(): ?float
@@ -459,8 +397,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::setLongitude()
      */
     public function setLongitude(?float $longitude): self
@@ -471,8 +407,6 @@ trait LogonAuditTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see LogonAuditInterface::getLongitude()
      */
     public function getLongitude(): ?float

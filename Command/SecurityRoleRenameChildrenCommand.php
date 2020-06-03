@@ -25,14 +25,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SecurityRoleRenameChildrenCommand extends Command
 {
-    /**
-     * @var RoleRename
-     */
-    private $batch;
+    private RoleRename $batch;
 
-    /**
-     * Constructor.
-     */
     public function __construct(RoleRename $batch)
     {
         parent::__construct();
@@ -40,9 +34,6 @@ class SecurityRoleRenameChildrenCommand extends Command
         $this->batch = $batch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -55,9 +46,6 @@ class SecurityRoleRenameChildrenCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $old = $input->getArgument('old-name');

@@ -20,10 +20,7 @@ use Symfony\Component\Config\Resource\DirectoryResource;
  */
 abstract class AbstractAnnotationLoader extends BaseAbstractAnnotationLoader
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function supports($resource, $type = null): bool
+    public function supports($resource, string $type = null): bool
     {
         return 'annotation' === $type && \is_string($resource) && is_dir($resource);
     }
@@ -33,7 +30,7 @@ abstract class AbstractAnnotationLoader extends BaseAbstractAnnotationLoader
      * @param mixed                           $resource        The resource
      * @param string                          $annotationClass The annotation class name
      */
-    protected function addClasses(AbstractClassesConfigCollection $configs, $resource, $annotationClass): void
+    protected function addClasses(AbstractClassesConfigCollection $configs, $resource, string $annotationClass): void
     {
         $configs->addResource(new DirectoryResource($resource));
 

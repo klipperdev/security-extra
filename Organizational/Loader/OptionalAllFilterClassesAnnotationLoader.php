@@ -19,10 +19,7 @@ use Klipper\Component\SecurityExtra\Organizational\ExcludedClassesConfigCollecti
  */
 class OptionalAllFilterClassesAnnotationLoader extends AbstractAnnotationLoader
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load($resource, $type = null): ExcludedClassesConfigCollection
+    public function load($resource, string $type = null): ExcludedClassesConfigCollection
     {
         $configs = new ExcludedClassesConfigCollection();
         $this->addClasses($configs, $resource, OrganizationalFilterOptionalAllFilterClass::class);

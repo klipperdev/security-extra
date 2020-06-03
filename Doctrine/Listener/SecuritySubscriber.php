@@ -30,24 +30,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SecuritySubscriber implements EventSubscriber
 {
-    /**
-     * @var null|ContainerInterface
-     */
-    public $container;
+    public ?ContainerInterface $container = null;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
+    protected ?TokenStorageInterface $tokenStorage = null;
 
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
+    protected ?TranslatorInterface $translator = null;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -98,7 +86,7 @@ class SecuritySubscriber implements EventSubscriber
      * @param object                         $entity The entity
      * @param ConstraintViolationInterface[] $errors The errors by reference
      */
-    protected function validateEditAuthorization(EntityManagerInterface $em, $entity, array &$errors): void
+    protected function validateEditAuthorization(EntityManagerInterface $em, object $entity, array &$errors): void
     {
         if ($entity instanceof UserInterface) {
             $changeSet = $em->getUnitOfWork()->getEntityChangeSet($entity);

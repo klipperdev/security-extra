@@ -22,10 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CsrfSwitcherTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @var null|bool
-     */
-    private $enabled;
+    private ?bool $enabled = null;
 
     /**
      * Set if the CSRF must be enabled.
@@ -37,9 +34,6 @@ class CsrfSwitcherTypeExtension extends AbstractTypeExtension
         $this->enabled = $enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         if (null === $this->enabled) {
@@ -51,9 +45,6 @@ class CsrfSwitcherTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

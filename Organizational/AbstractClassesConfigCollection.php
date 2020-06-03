@@ -32,8 +32,6 @@ abstract class AbstractClassesConfigCollection extends AbstractConfigCollection
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string[]
      */
     public function all(): array

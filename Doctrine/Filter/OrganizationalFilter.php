@@ -45,8 +45,6 @@ class OrganizationalFilter extends AbstractFilter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function supports(ClassMetadata $targetEntity): bool
@@ -64,8 +62,6 @@ class OrganizationalFilter extends AbstractFilter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws
      */
     protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string

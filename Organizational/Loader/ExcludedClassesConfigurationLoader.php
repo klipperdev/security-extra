@@ -19,14 +19,9 @@ use Symfony\Component\Config\Loader\Loader;
  */
 class ExcludedClassesConfigurationLoader extends Loader
 {
-    /**
-     * @var ExcludedClassesConfigCollection
-     */
-    protected $classes;
+    protected ExcludedClassesConfigCollection $classes;
 
     /**
-     * Constructor.
-     *
      * @param string[] $classes The class names
      */
     public function __construct(array $classes = [])
@@ -38,18 +33,12 @@ class ExcludedClassesConfigurationLoader extends Loader
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load($resource, $type = null): ExcludedClassesConfigCollection
+    public function load($resource, string $type = null): ExcludedClassesConfigCollection
     {
         return $this->classes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports($resource, $type = null): bool
+    public function supports($resource, string $type = null): bool
     {
         return 'config' === $type;
     }

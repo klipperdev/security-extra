@@ -23,14 +23,9 @@ use Symfony\Component\Validator\ConstraintViolation;
  */
 class IsReservedNameValidator extends ConstraintValidator
 {
-    /**
-     * @var array
-     */
-    protected $globalReservedNames;
+    protected array $globalReservedNames;
 
     /**
-     * Constructor.
-     *
      * @param array $globalReservedNames The global reserved names
      */
     public function __construct(array $globalReservedNames = [])

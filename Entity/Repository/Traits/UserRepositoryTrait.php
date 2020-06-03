@@ -33,8 +33,6 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 trait UserRepositoryTrait
 {
     /**
-     * {@inheritdoc}
-     *
      * @see UserRepositoryInterface::getExistingUsernames
      */
     public function getExistingUsernames(array $usernames): array
@@ -91,8 +89,6 @@ trait UserRepositoryTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see UserRepositoryInterface::findByUsernameOrHavingEmails
      */
     public function findByUsernameOrHavingEmails(array $usernames): array
