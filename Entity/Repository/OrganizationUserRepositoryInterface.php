@@ -11,8 +11,8 @@
 
 namespace Klipper\Component\SecurityExtra\Entity\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ObjectRepository;
 use Klipper\Component\Security\Model\OrganizationInterface;
 use Klipper\Component\Security\Model\OrganizationUserInterface;
 use Klipper\Component\Security\Model\UserInterface;

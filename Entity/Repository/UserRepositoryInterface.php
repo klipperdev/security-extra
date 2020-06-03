@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Entity\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Klipper\Component\DoctrineExtensionsExtra\Entity\Repository\Traits\InsensitiveRepositoryInterface;
 use Klipper\Component\Security\Model\UserInterface;
 
