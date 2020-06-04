@@ -228,7 +228,7 @@ class RoleRename
         if (null !== $orgId) {
             $qb
                 ->andWhere('uo.organization = :orgId')
-                ->setParameter('orgId', $orgId, \is_string($orgId) ? Type::GUID : null)
+                ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Type::GUID : null)
             ;
         }
     }

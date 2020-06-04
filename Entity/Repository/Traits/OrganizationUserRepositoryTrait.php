@@ -80,7 +80,7 @@ trait OrganizationUserRepositoryTrait
             ->leftJoin('uo.organization', 'o')
             ->leftJoin('u.profile', 'p')
             ->leftJoin('uo.groups', 'g')
-            ->setParameter('orgId', $orgId, \is_string($orgId) ? Type::GUID : null)
+            ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Type::GUID : null)
         ;
     }
 
@@ -140,7 +140,7 @@ trait OrganizationUserRepositoryTrait
             ->leftJoin(UserInterface::class, 'u', Join::WITH, 'u.id = uo.user')
             ->leftJoin(GroupInterface::class, 'g', Join::WITH, 'g.organization = uo.organization')
             ->setMaxResults(1)
-            ->setParameter('id', $id, \is_string($id) ? Type::GUID : null)
+            ->setParameter('id', $id, \is_string($id) && !is_numeric($id)? Type::GUID : null)
             ->getQuery()
             ->getResult()
         ;
