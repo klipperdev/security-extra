@@ -46,7 +46,7 @@ class SecurityRoleRenameChildrenCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $old = $input->getArgument('old-name');
         $new = $input->getArgument('new-name');
@@ -66,5 +66,7 @@ class SecurityRoleRenameChildrenCommand extends Command
 
             $output->writeln($msg);
         }
+
+        return 0;
     }
 }
