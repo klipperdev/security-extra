@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Entity\Repository\Traits;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -80,7 +80,7 @@ trait OrganizationUserRepositoryTrait
             ->leftJoin('uo.organization', 'o')
             ->leftJoin('u.profile', 'p')
             ->leftJoin('uo.groups', 'g')
-            ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Type::GUID : null)
+            ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Types::GUID : null)
         ;
     }
 
@@ -140,7 +140,7 @@ trait OrganizationUserRepositoryTrait
             ->leftJoin(UserInterface::class, 'u', Join::WITH, 'u.id = uo.user')
             ->leftJoin(GroupInterface::class, 'g', Join::WITH, 'g.organization = uo.organization')
             ->setMaxResults(1)
-            ->setParameter('id', $id, \is_string($id) && !is_numeric($id)? Type::GUID : null)
+            ->setParameter('id', $id, \is_string($id) && !is_numeric($id) ? Types::GUID : null)
             ->getQuery()
             ->getResult()
         ;

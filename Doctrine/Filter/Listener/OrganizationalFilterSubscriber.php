@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Doctrine\Filter\Listener;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 use Klipper\Component\DoctrineExtensionsExtra\Filter\Listener\AbstractFilterSubscriber;
@@ -86,8 +86,8 @@ class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
         $filter->setParameter('user_excluded_orgs_classes', $this->userExcludedOrgsClasses, 'array');
         $filter->setParameter('has_organization', null !== $org, 'boolean');
         $filter->setParameter('is_user_organization', null !== $org && $org->isUserOrganization(), 'boolean');
-        $filter->setParameter('organization_id', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Type::GUID : null);
-        $filter->setParameter('organization_user_id', $orgUserId, \is_string($orgUserId) && !is_numeric($orgUserId) ? Type::GUID : null);
+        $filter->setParameter('organization_id', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Types::GUID : null);
+        $filter->setParameter('organization_user_id', $orgUserId, \is_string($orgUserId) && !is_numeric($orgUserId) ? Types::GUID : null);
         $filter->setParameter('context_optional_filter_type', $this->orgContext->getOptionalFilterType());
     }
 

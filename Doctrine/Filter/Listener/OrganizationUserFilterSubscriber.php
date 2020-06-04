@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Doctrine\Filter\Listener;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 use Klipper\Component\Security\Doctrine\DoctrineUtils;
@@ -58,7 +58,7 @@ class OrganizationUserFilterSubscriber extends AbstractTokenUserFilterSubscriber
         $filter->setParameter('is_current_organizations', false, 'boolean');
         $filter->setParameter('has_organization', null !== $org, 'boolean');
         $filter->setParameter('is_user_organization', null !== $org && $org->isUserOrganization(), 'boolean');
-        $filter->setParameter('organization_id', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Type::GUID : null);
+        $filter->setParameter('organization_id', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Types::GUID : null);
     }
 
     protected function getTokenUserId()

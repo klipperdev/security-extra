@@ -11,7 +11,7 @@
 
 namespace Klipper\Component\SecurityExtra\Batch;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Klipper\Component\Batch\JobResult;
@@ -228,7 +228,7 @@ class RoleRename
         if (null !== $orgId) {
             $qb
                 ->andWhere('uo.organization = :orgId')
-                ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Type::GUID : null)
+                ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Types::GUID : null)
             ;
         }
     }
