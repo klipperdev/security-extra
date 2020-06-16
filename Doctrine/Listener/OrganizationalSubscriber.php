@@ -75,7 +75,7 @@ class OrganizationalSubscriber implements EventSubscriber
 
     public function preUpdate(LifecycleEventArgs $args): void
     {
-        //$this->prePersist($args);
+        $this->prePersist($args);
     }
 
     /**
