@@ -134,7 +134,7 @@ trait OrganizationUserRepositoryTrait
         SqlFilterUtil::disableFilters($em, $filters);
 
         $result = $this->createQueryBuilder('uo')
-            ->addSelect('o')
+            ->addSelect('o, u, g')
             ->where('uo.id = :id')
             ->leftJoin(OrganizationInterface::class, 'o', Join::WITH, 'o.id = uo.organization')
             ->leftJoin(UserInterface::class, 'u', Join::WITH, 'u.id = uo.user')
