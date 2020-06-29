@@ -293,7 +293,6 @@ class OrganizationUserSubscriber implements EventSubscriber
                 ->leftJoin('uo.organization', 'o')
                 ->where('uo.id NOT IN(:ids)')
                 ->andWhere('uo.roles LIKE :role')
-                ->andWhere('uo.invitationEmail IS NULL')
                 ->andWhere('uo.enabled = true')
                 ->andWhere('o.id IS NOT NULL')
                 ->andWhere('o.id IN(:oids)')
