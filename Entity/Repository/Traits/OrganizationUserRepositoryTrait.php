@@ -73,12 +73,11 @@ trait OrganizationUserRepositoryTrait
         $orgId = null !== $org ? $org->getId() : DoctrineUtils::getMockZeroId($this->getClassMetadata());
 
         return $this->createQueryBuilder('uo')
-            ->addSelect('uo, u, o, p')
+            ->addSelect('uo, u, o')
             ->where('uo.organization = :orgId')
             ->andWhere('o.user IS null')
             ->leftJoin('uo.user', 'u')
             ->leftJoin('uo.organization', 'o')
-            ->leftJoin('u.profile', 'p')
             ->leftJoin('uo.groups', 'g')
             ->setParameter('orgId', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Types::GUID : null)
         ;
@@ -91,9 +90,9 @@ trait OrganizationUserRepositoryTrait
     {
         $qb = $this->createQueryBuilder('uo')
             ->addSelect('uo')
+            ->addSelect('u')
             ->leftJoin('uo.user', 'u')
             ->leftJoin('uo.organization', 'o')
-            ->leftJoin('u.profile', 'p')
             ->orderBy('o.label')
             ->getQuery()
         ;
