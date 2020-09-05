@@ -59,9 +59,12 @@ class OrganizationUserFilter extends AbstractFilter
             $conn = $this->getConnection();
             $platform = $conn->getDatabasePlatform();
             $column = $targetEntity->getColumnName('user_id');
-            $columnToken = $targetEntity->getColumnName('invitation_email');
             $addCondSql = "{$targetTableAlias}.{$column} = {$this->getParameter('user_id')}";
-            $addCondSql = "{$addCondSql} AND {$platform->getIsNullExpression($targetTableAlias.'.'.$columnToken)}";
+
+            if ($targetEntity->hasField('invitationEmail')) {
+                $columnToken = $targetEntity->getColumnName('invitation_email');
+                $addCondSql = "{$addCondSql} AND {$platform->getIsNullExpression($targetTableAlias.'.'.$columnToken)}";
+            }
         } else {
             $column = $targetEntity->getColumnName('organization_id');
             $addCondSql = "{$targetTableAlias}.{$column} = {$this->getParameter('organization_id')}";
