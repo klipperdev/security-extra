@@ -23,6 +23,7 @@ use Klipper\Component\Security\Model\Traits\OrganizationalRequiredInterface;
 use Klipper\Component\Security\Model\UserInterface;
 use Klipper\Component\Security\Organizational\OrganizationalContextInterface;
 use Klipper\Component\Security\OrganizationalTypes;
+use Klipper\Contracts\Model\IdInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -135,7 +136,10 @@ class OrganizationalSubscriber implements EventSubscriber
      */
     protected function isInjectableOrgInOptionalEntity($entity): bool
     {
+        $isUpdate = $entity instanceof IdInterface && null !== $entity->getId();
+
         return $entity instanceof OrganizationalOptionalInterface
+            && !$isUpdate
             && !$this->context->isOptionalFilterType(OrganizationalTypes::OPTIONAL_FILTER_WITHOUT_ORG);
     }
 }
