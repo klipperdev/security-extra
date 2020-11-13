@@ -37,7 +37,10 @@ class RoleFilter extends AbstractFilter
 
     protected function doAddFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string
     {
-        return "{$targetTableAlias}.{$targetEntity->getColumnName('name')} NOT IN ({$this->buildRoleNamesQuery()})";
+        $excludedRoles = $this->buildRoleNamesQuery();
+        $this->setParameter('excludedRoles', $excludedRoles);
+
+        return "{$targetTableAlias}.{$targetEntity->getColumnName('name')} NOT IN ({$excludedRoles})";
     }
 
     /**
