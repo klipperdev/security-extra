@@ -114,9 +114,9 @@ class RoleRename
                 $orgUsers = [];
 
                 foreach ($entities as $entity) {
-                    if ($entity instanceof UserInterface ||
-                            $entity instanceof GroupInterface ||
-                            $entity instanceof OrganizationUserInterface) {
+                    if ($entity instanceof UserInterface
+                            || $entity instanceof GroupInterface
+                            || $entity instanceof OrganizationUserInterface) {
                         $entity->removeRole($oldName);
                         $entity->addRole($newName);
                     }
