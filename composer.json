@@ -22,7 +22,7 @@
         "klipper/object": "^2.0.0",
         "klipper/phone": "^2.0.0",
         "klipper/uuid": "^2.0.0",
-        "doctrine/orm": "^2.6.0",
+        "doctrine/orm": "^2.8.0",
         "klipper/config": "^2.0.0",
         "klipper/doctrine-extensions": "^2.0.0",
         "klipper/doctrine-extra": "^2.0.0",
