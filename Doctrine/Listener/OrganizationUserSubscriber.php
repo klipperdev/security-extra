@@ -23,7 +23,6 @@ use Klipper\Component\Security\Model\OrganizationInterface;
 use Klipper\Component\Security\Model\OrganizationUserInterface;
 use Klipper\Component\Security\Model\Traits\RoleableInterface;
 use Klipper\Component\Security\Permission\PermissionManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -32,18 +31,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrganizationUserSubscriber implements EventSubscriber
 {
-    public ?ContainerInterface $container = null;
-
     protected TranslatorInterface $translator;
 
-    protected ?PermissionManagerInterface $permissionManager = null;
+    protected PermissionManagerInterface $permissionManager;
 
-    /**
-     * @param TranslatorInterface $translator The translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        PermissionManagerInterface $permissionManager
+    ) {
         $this->translator = $translator;
+        $this->permissionManager = $permissionManager;
     }
 
     public function getSubscribedEvents(): array
@@ -271,8 +268,8 @@ class OrganizationUserSubscriber implements EventSubscriber
         $deleted = [];
         $deletedOrgIds = [];
 
-        $pmEnabled = $this->getPermissionManager()->isEnabled();
-        $this->getPermissionManager()->setEnabled(false);
+        $pmEnabled = $this->permissionManager->isEnabled();
+        $this->permissionManager->setEnabled(false);
         $filters = SqlFilterUtil::findFilters($em, [], true);
         SqlFilterUtil::disableFilters($em, $filters);
 
@@ -321,20 +318,7 @@ class OrganizationUserSubscriber implements EventSubscriber
             }
         }
 
-        $this->getPermissionManager()->setEnabled($pmEnabled);
+        $this->permissionManager->setEnabled($pmEnabled);
         SqlFilterUtil::enableFilters($em, $filters);
-    }
-
-    /**
-     * Get the permission manager.
-     */
-    protected function getPermissionManager(): PermissionManagerInterface
-    {
-        if (null !== $this->container) {
-            $this->permissionManager = $this->container->get('klipper_security.permission_manager');
-            $this->container = null;
-        }
-
-        return $this->permissionManager;
     }
 }

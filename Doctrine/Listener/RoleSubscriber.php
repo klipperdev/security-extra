@@ -27,7 +27,6 @@ use Klipper\Component\Security\Model\RoleInterface;
 use Klipper\Component\Security\Model\Traits\OrganizationalInterface;
 use Klipper\Component\Security\Model\UserInterface;
 use Klipper\Component\Security\Permission\PermissionManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -35,18 +34,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class RoleSubscriber implements EventSubscriber
 {
-    public ?ContainerInterface $container = null;
-
     protected TranslatorInterface $translator;
 
-    protected ?PermissionManagerInterface $permissionManager = null;
+    protected PermissionManagerInterface $permissionManager;
 
-    /**
-     * @param TranslatorInterface $translator The translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        PermissionManagerInterface $permissionManager
+    ) {
         $this->translator = $translator;
+        $this->permissionManager = $permissionManager;
     }
 
     public function getSubscribedEvents(): array
@@ -72,7 +69,10 @@ class RoleSubscriber implements EventSubscriber
             $entity->setName('ROLE_'.$entity->getName());
         }
 
-        if (null === $entity->getLabel()) {
+        if (method_exists($entity, 'getLabel')
+            && method_exists($entity, 'setLabel')
+            && null === $entity->getLabel()
+        ) {
             $entity->setLabel($entity->getName());
         }
     }
@@ -88,8 +88,8 @@ class RoleSubscriber implements EventSubscriber
         $uow = $em->getUnitOfWork();
         $errors = [];
 
-        $pmEnabled = $this->getPermissionManager()->isEnabled();
-        $this->getPermissionManager()->setEnabled(false);
+        $pmEnabled = $this->permissionManager->isEnabled();
+        $this->permissionManager->setEnabled(false);
         $filters = SqlFilterUtil::findFilters($em, [], true);
         SqlFilterUtil::disableFilters($em, $filters);
 
@@ -102,7 +102,7 @@ class RoleSubscriber implements EventSubscriber
             }
         }
 
-        $this->getPermissionManager()->setEnabled($pmEnabled);
+        $this->permissionManager->setEnabled($pmEnabled);
         SqlFilterUtil::enableFilters($em, $filters);
 
         if (\count($errors) > 0) {
@@ -218,26 +218,5 @@ class RoleSubscriber implements EventSubscriber
         }
 
         $qb->setParameter('role', '%'.$pf->quoteIdentifier($role->getName()).'%');
-    }
-
-    /**
-     * Get the permission manager.
-     */
-    protected function getPermissionManager(): PermissionManagerInterface
-    {
-        $this->init();
-
-        return $this->permissionManager;
-    }
-
-    /**
-     * Init the dependencies.
-     */
-    private function init(): void
-    {
-        if (null !== $this->container) {
-            $this->permissionManager = $this->container->get('klipper_security.permission_manager');
-            $this->container = null;
-        }
     }
 }

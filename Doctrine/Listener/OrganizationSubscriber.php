@@ -18,13 +18,12 @@ use Doctrine\ORM\Events;
 use Klipper\Component\DoctrineExtensionsExtra\Util\ListenerUtil;
 use Klipper\Component\Model\Traits\LabelableInterface;
 use Klipper\Component\Resource\Domain\DomainInterface;
+use Klipper\Component\Resource\Object\ObjectFactoryInterface;
 use Klipper\Component\Security\Model\OrganizationInterface;
 use Klipper\Component\Security\Model\OrganizationUserInterface;
-use Klipper\Component\Security\Model\RoleInterface;
 use Klipper\Component\Security\Model\Traits\RoleableInterface;
 use Klipper\Component\Security\Model\UserInterface;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -34,33 +33,28 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrganizationSubscriber implements EventSubscriber
 {
-    public ?ContainerInterface $container = null;
-
     protected TokenStorageInterface $tokenStorage;
 
     protected TranslatorInterface $translator;
 
-    protected string $orgClass;
+    protected ValidatorInterface $validator;
+
+    protected ObjectFactoryInterface $objectFactory;
 
     protected ?DomainInterface $domainRole = null;
 
     protected ?DomainInterface $domainOrgUser = null;
 
-    protected ?ValidatorInterface $validator = null;
-
-    /**
-     * @param TokenStorageInterface $tokenStorage The token storage
-     * @param TranslatorInterface   $translator   The translator
-     * @param string                $orgClass     The organization class name
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         TranslatorInterface $translator,
-        $orgClass = OrganizationInterface::class
+        ValidatorInterface $validator,
+        ObjectFactoryInterface $objectFactory
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->translator = $translator;
-        $this->orgClass = $orgClass;
+        $this->validator = $validator;
+        $this->objectFactory = $objectFactory;
     }
 
     public function getSubscribedEvents(): array
@@ -104,7 +98,7 @@ class OrganizationSubscriber implements EventSubscriber
                 if ($entity->getUser()->getUsername() !== $entity->getName()) {
                     $message = 'The field "name" of the user organization does not be edited';
                     ListenerUtil::thrownError($message, $entity, 'name');
-                } elseif (!isset($changeSet['label'])) {
+                } elseif (method_exists($entity, 'setLabel') && !isset($changeSet['label'])) {
                     $entity->setLabel($entity->getName());
                 }
             }
@@ -142,9 +136,8 @@ class OrganizationSubscriber implements EventSubscriber
             return;
         }
 
-        $domain = $this->getDomainOrgUser();
         /** @var OrganizationUserInterface $orgUser */
-        $orgUser = $domain->newInstance();
+        $orgUser = $this->objectFactory->create(OrganizationUserInterface::class);
         $orgUser->setOrganization($org);
         $orgUser->setUser($this->getTokenUser());
 
@@ -152,7 +145,7 @@ class OrganizationSubscriber implements EventSubscriber
             $orgUser->addRole('ROLE_ADMIN');
         }
 
-        ListenerUtil::validateEntity($this->getValidator(), $orgUser);
+        ListenerUtil::validateEntity($this->validator, $orgUser);
         $org->addOrganizationUser($orgUser);
     }
 
@@ -165,49 +158,6 @@ class OrganizationSubscriber implements EventSubscriber
     }
 
     /**
-     * Get the role domain.
-     */
-    protected function getDomainRole(): DomainInterface
-    {
-        $this->init();
-
-        return $this->domainRole;
-    }
-
-    /**
-     * Get the organization user domain.
-     */
-    protected function getDomainOrgUser(): DomainInterface
-    {
-        $this->init();
-
-        return $this->domainOrgUser;
-    }
-
-    /**
-     * Get the validator.
-     */
-    protected function getValidator(): ValidatorInterface
-    {
-        $this->init();
-
-        return $this->validator;
-    }
-
-    /**
-     * Init the domains.
-     */
-    protected function init(): void
-    {
-        if (null !== $this->container) {
-            $this->domainRole = $this->container->get('klipper_resource.domain_manager')->get(RoleInterface::class);
-            $this->domainOrgUser = $this->container->get('klipper_resource.domain_manager')->get(OrganizationUserInterface::class);
-            $this->validator = $this->container->get('validator');
-            $this->container = null;
-        }
-    }
-
-    /**
      * Persist the entity.
      *
      * @param EntityManagerInterface $em     The entity manager
@@ -215,7 +165,7 @@ class OrganizationSubscriber implements EventSubscriber
      */
     protected function persistEntity(EntityManagerInterface $em, object $entity): void
     {
-        ListenerUtil::validateEntity($this->getValidator(), $entity);
+        ListenerUtil::validateEntity($this->validator, $entity);
 
         $em->persist($entity);
     }

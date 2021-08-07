@@ -20,7 +20,6 @@ use Klipper\Component\DoctrineExtensionsExtra\Util\ListenerUtil;
 use Klipper\Component\Security\Model\Traits\RoleableInterface;
 use Klipper\Component\Security\Model\UserInterface;
 use Klipper\Component\SecurityExtra\Model\Traits\GroupableInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -30,11 +29,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SecuritySubscriber implements EventSubscriber
 {
-    public ?ContainerInterface $container = null;
+    protected TokenStorageInterface $tokenStorage;
 
-    protected ?TokenStorageInterface $tokenStorage = null;
+    protected TranslatorInterface $translator;
 
-    protected ?TranslatorInterface $translator = null;
+    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
+    {
+        $this->tokenStorage = $tokenStorage;
+        $this->translator = $translator;
+    }
 
     public function getSubscribedEvents(): array
     {
@@ -48,7 +51,6 @@ class SecuritySubscriber implements EventSubscriber
      */
     public function onFlush(OnFlushEventArgs $args): void
     {
-        $this->init();
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
         $errors = [];
@@ -111,17 +113,5 @@ class SecuritySubscriber implements EventSubscriber
         $user = $this->tokenStorage->getToken()->getUser();
 
         return $user instanceof RoleableInterface && $user->hasRole('ROLE_SUPER_ADMIN');
-    }
-
-    /**
-     * Init the dependencies.
-     */
-    private function init(): void
-    {
-        if (null !== $this->container) {
-            $this->tokenStorage = $this->container->get('security.token_storage');
-            $this->translator = $this->container->get('translator');
-            $this->container = null;
-        }
     }
 }

@@ -12,7 +12,7 @@
 namespace Klipper\Component\SecurityExtra\Doctrine\Listener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
@@ -20,7 +20,7 @@ use Doctrine\ORM\UnitOfWork;
 use Klipper\Component\DoctrineExtensionsExtra\Util\ListenerUtil;
 use Klipper\Component\DoctrineExtra\Util\ClassUtils;
 use Klipper\Component\Model\Traits\LabelableInterface;
-use Klipper\Component\Resource\Domain\DomainManagerInterface;
+use Klipper\Component\Resource\Object\ObjectFactoryInterface;
 use Klipper\Component\Security\Model\OrganizationInterface;
 use Klipper\Component\Security\Model\Traits\OrganizationalInterface;
 use Klipper\Component\Security\Model\Traits\OrganizationalOptionalInterface;
@@ -28,7 +28,6 @@ use Klipper\Component\Security\Model\Traits\OrganizationalRequiredInterface;
 use Klipper\Component\Security\Model\Traits\RoleableInterface;
 use Klipper\Component\Security\Model\UserInterface;
 use Klipper\Component\SecurityExtra\Entity\Repository\UserRepositoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -38,26 +37,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UserSubscriber implements EventSubscriber
 {
-    public ?ContainerInterface $container = null;
-
     protected TranslatorInterface $translator;
 
-    protected ?ValidatorInterface $validator = null;
+    protected ValidatorInterface $validator;
 
-    protected ?DomainManagerInterface $domainManager = null;
+    protected ObjectFactoryInterface $objectFactory;
 
-    protected string $orgClass;
-
-    /**
-     * @param TranslatorInterface $translator The translator
-     * @param string              $orgClass   The organization class name
-     */
     public function __construct(
         TranslatorInterface $translator,
-        $orgClass = OrganizationInterface::class
+        ValidatorInterface $validator,
+        ObjectFactoryInterface $objectFactory
     ) {
         $this->translator = $translator;
-        $this->orgClass = $orgClass;
+        $this->validator = $validator;
+        $this->objectFactory = $objectFactory;
     }
 
     public function getSubscribedEvents(): array
@@ -126,7 +119,7 @@ class UserSubscriber implements EventSubscriber
         }
 
         if (!empty($generateUsernames)) {
-            $this->generateUsernames($uow, $generateUsernames, $existingOrgNames);
+            $this->generateUsernames($em, $uow, $generateUsernames, $existingOrgNames);
         }
 
         if (\count($errors) > 0) {
@@ -141,10 +134,9 @@ class UserSubscriber implements EventSubscriber
      * @param UserInterface[] $users            The user entities
      * @param string[]        $existingOrgNames The existing organization names
      */
-    protected function generateUsernames(UnitOfWork $uow, array $users, array $existingOrgNames): void
+    protected function generateUsernames(EntityManagerInterface $em, UnitOfWork $uow, array $users, array $existingOrgNames): void
     {
         $emails = [];
-        $meta = null;
 
         foreach ($users as $user) {
             $email = $user->getEmail();
@@ -152,7 +144,7 @@ class UserSubscriber implements EventSubscriber
         }
 
         /** @var UserRepositoryInterface $userRepo */
-        $userRepo = $this->getDomainManager()->get(UserInterface::class)->getRepository();
+        $userRepo = $em->getRepository(UserInterface::class);
         $existingUsernames = $userRepo->getExistingUsernames(array_values($emails));
         $existingUsernames = array_merge($existingUsernames, $existingOrgNames);
 
@@ -191,7 +183,7 @@ class UserSubscriber implements EventSubscriber
     {
         if ($entity instanceof OrganizationalInterface && null === $entity->getOrganization()) {
             /** @var OrganizationInterface $org */
-            $org = $this->getDomainManager()->get($this->orgClass)->newInstance();
+            $org = $this->objectFactory->create(OrganizationInterface::class);
             $org->setName($entity->getUsername());
             $org->setUser($entity);
 
@@ -199,7 +191,7 @@ class UserSubscriber implements EventSubscriber
                 $org->addRole('ROLE_ADMIN');
             }
 
-            ListenerUtil::validateEntity($this->getValidator(), $entity);
+            ListenerUtil::validateEntity($this->validator, $entity);
 
             if ($entity instanceof OrganizationalOptionalInterface || $entity instanceof OrganizationalRequiredInterface) {
                 $entity->setOrganization($org);
@@ -228,11 +220,11 @@ class UserSubscriber implements EventSubscriber
     /**
      * Update the organization of user.
      *
-     * @param UserInterface $entity The user entity
-     * @param EntityManager $em     The entity manager
-     * @param UnitOfWork    $uow    The unit of work
+     * @param UserInterface          $entity The user entity
+     * @param EntityManagerInterface $em     The entity manager
+     * @param UnitOfWork             $uow    The unit of work
      */
-    protected function updateOrganization(UserInterface $entity, EntityManager $em, UnitOfWork $uow): void
+    protected function updateOrganization(UserInterface $entity, EntityManagerInterface $em, UnitOfWork $uow): void
     {
         if ($entity instanceof OrganizationalInterface && null !== $entity->getOrganization()) {
             $changeSet = $uow->getEntityChangeSet($entity);
@@ -263,38 +255,6 @@ class UserSubscriber implements EventSubscriber
         if ($entity instanceof UserInterface && $entity->getUserOrganizations()->count() > 0) {
             $msg = $this->translator->trans('user.not_delete_account', ['{{ username }}' => $entity->getUsername()], 'validators');
             $errors[] = ListenerUtil::createViolation($msg, $entity);
-        }
-    }
-
-    /**
-     * Get the validator.
-     */
-    protected function getValidator(): ValidatorInterface
-    {
-        $this->init();
-
-        return $this->validator;
-    }
-
-    /**
-     * Get the domain manager.
-     */
-    protected function getDomainManager(): DomainManagerInterface
-    {
-        $this->init();
-
-        return $this->domainManager;
-    }
-
-    /**
-     * Init the dependencies.
-     */
-    private function init(): void
-    {
-        if (null !== $this->container) {
-            $this->validator = $this->container->get('validator');
-            $this->domainManager = $this->container->get('klipper_resource.domain_manager');
-            $this->container = null;
         }
     }
 }

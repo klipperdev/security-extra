@@ -56,7 +56,7 @@ class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
     public function __construct(
         EntityManagerInterface $entityManager,
         OrganizationalContextInterface $orgContext,
-        ?OrganizationalFilterFactoryInterface $factory
+        ?OrganizationalFilterFactoryInterface $factory = null
     ) {
         parent::__construct($entityManager);
 

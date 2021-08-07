@@ -22,7 +22,6 @@ use Klipper\Component\Model\Traits\LabelableInterface;
 use Klipper\Component\Security\Model\GroupInterface;
 use Klipper\Component\Security\Model\Traits\OrganizationalInterface;
 use Klipper\Component\Security\Permission\PermissionManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -30,18 +29,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GroupSubscriber implements EventSubscriber
 {
-    public ?ContainerInterface $container = null;
-
     protected TranslatorInterface $translator;
 
-    protected ?PermissionManagerInterface $permissionManager = null;
+    protected PermissionManagerInterface $permissionManager;
 
     /**
      * @param TranslatorInterface $translator The translator
      */
-    public function __construct(TranslatorInterface $translator)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        PermissionManagerInterface $permissionManager
+    ) {
         $this->translator = $translator;
+        $this->permissionManager = $permissionManager;
     }
 
     public function getSubscribedEvents(): array
@@ -125,11 +125,6 @@ class GroupSubscriber implements EventSubscriber
      */
     protected function getPermissionManager(): PermissionManagerInterface
     {
-        if (null !== $this->container) {
-            $this->permissionManager = $this->container->get('klipper_security.permission_manager');
-            $this->container = null;
-        }
-
         return $this->permissionManager;
     }
 }
