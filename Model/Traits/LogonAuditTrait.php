@@ -29,7 +29,7 @@ trait LogonAuditTrait
     /**
      * @ORM\Column(type="string")
      */
-    protected ?string $username = null;
+    protected ?string $userIdentifier = null;
 
     /**
      * @ORM\Column(type="string")
@@ -127,21 +127,21 @@ trait LogonAuditTrait
     }
 
     /**
-     * @see LogonAuditInterface::setUsername()
+     * @see LogonAuditInterface::setUserIdentifier()
      */
-    public function setUsername(?string $username): self
+    public function setUserIdentifier(?string $userIdentifier): self
     {
-        $this->username = $username;
+        $this->userIdentifier = $userIdentifier;
 
         return $this;
     }
 
     /**
-     * @see LogonAuditInterface::getUsername()
+     * @see LogonAuditInterface::getUserIdentifier()
      */
-    public function getUsername(): ?string
+    public function getUserIdentifier(): ?string
     {
-        return $this->username;
+        return $this->userIdentifier;
     }
 
     /**

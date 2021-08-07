@@ -130,7 +130,7 @@ class LogonAuditSubscriber implements EventSubscriberInterface
 
         $audit
             ->setUserId($user->getId())
-            ->setUsername($user->getUsername())
+            ->setUserIdentifier($user->getUserIdentifier())
             ->setHost($request->getHttpHost())
             ->setUri($request->getRequestUri())
             ->setLoggedAt($loggedAt)

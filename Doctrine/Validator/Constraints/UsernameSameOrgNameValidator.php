@@ -63,13 +63,13 @@ class UsernameSameOrgNameValidator extends ConstraintValidator
         $filters = SqlFilterUtil::findFilters($this->om, (array) $constraint->filters, $constraint->allFilters);
 
         SqlFilterUtil::disableFilters($this->om, $filters);
-        $res = $this->repo->findByInsensitive(['name' => $value->getUsername(), 'user' => null], null, 1);
+        $res = $this->repo->findByInsensitive(['name' => $value->getUserIdentifier(), 'user' => null], null, 1);
         SqlFilterUtil::enableFilters($this->om, $filters);
 
         if (\count($res) > 0) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('username')
-                ->setInvalidValue($value->getUsername())
+                ->setInvalidValue($value->getUserIdentifier())
                 ->addViolation()
             ;
         }

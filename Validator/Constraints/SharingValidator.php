@@ -183,6 +183,6 @@ class SharingValidator extends ConstraintValidator
         return ($subject instanceof OwnerableInterface || $subject instanceof OwnerableOptionalInterface)
             && null !== $user
             && null !== $subject->getOwner()
-            && $subject->getOwner()->getUsername() === $user->getUsername();
+            && $subject->getOwner()->getUserIdentifier() === $user->getUserIdentifier();
     }
 }

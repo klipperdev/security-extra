@@ -37,18 +37,18 @@ interface LogonAuditInterface extends IdInterface
     public function getUserId();
 
     /**
-     * Set the username.
+     * Set the user identifier.
      *
-     * @param null|string $username The username
+     * @param null|string $userIdentifier The user identifier
      *
      * @return static
      */
-    public function setUsername(?string $username);
+    public function setUserIdentifier(?string $userIdentifier);
 
     /**
-     * Get the username.
+     * Get the user identifier.
      */
-    public function getUsername(): ?string;
+    public function getUserIdentifier(): ?string;
 
     /**
      * Set the host.

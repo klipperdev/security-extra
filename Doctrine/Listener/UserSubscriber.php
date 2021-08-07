@@ -101,7 +101,7 @@ class UserSubscriber implements EventSubscriber
         $errors = [];
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof UserInterface && null === $entity->getUsername()) {
+            if ($entity instanceof UserInterface && null === $entity->getUserIdentifier()) {
                 $generateUsernames[] = $entity;
             } elseif ($entity instanceof OrganizationInterface) {
                 $existingOrgNames[] = $entity->getName();
@@ -145,19 +145,19 @@ class UserSubscriber implements EventSubscriber
 
         /** @var UserRepositoryInterface $userRepo */
         $userRepo = $em->getRepository(UserInterface::class);
-        $existingUsernames = $userRepo->getExistingUsernames(array_values($emails));
-        $existingUsernames = array_merge($existingUsernames, $existingOrgNames);
+        $existingUserIdentifiers = $userRepo->getExistingUserIdentifiers(array_values($emails));
+        $existingUserIdentifiers = array_merge($existingUserIdentifiers, $existingOrgNames);
 
         foreach ($users as $user) {
-            $oldUsername = $user->getUsername();
+            $oldUsername = $user->getUserIdentifier();
             $username = $emails[$user->getEmail()];
 
-            if (\in_array($username, $existingUsernames, true)) {
+            if (\in_array($username, $existingUserIdentifiers, true)) {
                 $username = uniqid($username, false);
             }
 
-            $user->setUsername($username);
-            $uow->propertyChanged($user, 'username', $oldUsername, $user->getUsername());
+            $user->setUserIdentifier($username);
+            $uow->propertyChanged($user, 'username', $oldUsername, $user->getUserIdentifier());
 
             /** @var null|OrganizationInterface $userOrg */
             if (null !== $userOrg = $user->getOrganization()) {
@@ -184,7 +184,7 @@ class UserSubscriber implements EventSubscriber
         if ($entity instanceof OrganizationalInterface && null === $entity->getOrganization()) {
             /** @var OrganizationInterface $org */
             $org = $this->objectFactory->create(OrganizationInterface::class);
-            $org->setName($entity->getUsername());
+            $org->setName($entity->getUserIdentifier());
             $org->setUser($entity);
 
             if ($org instanceof RoleableInterface) {
@@ -253,7 +253,7 @@ class UserSubscriber implements EventSubscriber
     protected function validateDeletions(object $entity, array &$errors): void
     {
         if ($entity instanceof UserInterface && $entity->getUserOrganizations()->count() > 0) {
-            $msg = $this->translator->trans('user.not_delete_account', ['{{ username }}' => $entity->getUsername()], 'validators');
+            $msg = $this->translator->trans('user.not_delete_account', ['{{ username }}' => $entity->getUserIdentifier()], 'validators');
             $errors[] = ListenerUtil::createViolation($msg, $entity);
         }
     }

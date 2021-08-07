@@ -95,7 +95,7 @@ class OrganizationSubscriber implements EventSubscriber
             $changeSet = $uow->getEntityChangeSet($entity);
 
             if (isset($changeSet['name']) && null !== $entity->getUser()) {
-                if ($entity->getUser()->getUsername() !== $entity->getName()) {
+                if ($entity->getUser()->getUserIdentifier() !== $entity->getName()) {
                     $message = 'The field "name" of the user organization does not be edited';
                     ListenerUtil::thrownError($message, $entity, 'name');
                 } elseif (method_exists($entity, 'setLabel') && !isset($changeSet['label'])) {

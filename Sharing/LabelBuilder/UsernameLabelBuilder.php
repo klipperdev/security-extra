@@ -23,7 +23,7 @@ class UsernameLabelBuilder implements SharingEntryLabelBuilderInterface
 {
     public function supports(object $identity, SharingInterface $sharing): bool
     {
-        return $identity instanceof UserInterface && !UuidUtil::isV4($identity->getUsername());
+        return $identity instanceof UserInterface && !UuidUtil::isV4($identity->getUserIdentifier());
     }
 
     /**
@@ -31,6 +31,6 @@ class UsernameLabelBuilder implements SharingEntryLabelBuilderInterface
      */
     public function buildLabel(object $identity, SharingInterface $sharing): string
     {
-        return $identity->getUsername();
+        return $identity->getUserIdentifier();
     }
 }

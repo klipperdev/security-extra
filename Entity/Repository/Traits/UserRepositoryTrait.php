@@ -33,9 +33,9 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 trait UserRepositoryTrait
 {
     /**
-     * @see UserRepositoryInterface::getExistingUsernames
+     * @see UserRepositoryInterface::getExistingUserIdentifiers
      */
-    public function getExistingUsernames(array $usernames): array
+    public function getExistingUserIdentifiers(array $usernames): array
     {
         $usernames[] = 'baz-42';
         $res = [];

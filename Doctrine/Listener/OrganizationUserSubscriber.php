@@ -199,7 +199,7 @@ class OrganizationUserSubscriber implements EventSubscriber
                     && null !== $orgUser->getUser()
                     && !isset($orgAdmins[$orgUser->getOrganization()->getId()])) {
                 $msg = $this->translator->trans('organization_user.not_demote_last_admin', [
-                    '{{ username }}' => $orgUser->getUser()->getUsername(),
+                    '{{ username }}' => $orgUser->getUser()->getUserIdentifier(),
                     '{{ role }}' => 'ROLE_ADMIN',
                     '{{ organization }}' => $orgUser->getOrganization()->getName(),
                 ], 'validators');
@@ -246,7 +246,7 @@ class OrganizationUserSubscriber implements EventSubscriber
                     && null !== $orgUser->getUser()
                     && !isset($orgAdmins[$orgUser->getOrganization()->getId()])) {
                 $msg = $this->translator->trans('organization_user.not_disable_last_admin', [
-                    '{{ username }}' => $orgUser->getUser()->getUsername(),
+                    '{{ username }}' => $orgUser->getUser()->getUserIdentifier(),
                     '{{ organization }}' => $orgUser->getOrganization()->getName(),
                 ], 'validators');
                 $errors[] = ListenerUtil::createViolation($msg, $orgUser);

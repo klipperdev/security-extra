@@ -29,7 +29,7 @@ interface UserRepositoryInterface extends ObjectRepository, InsensitiveRepositor
      *
      * @return string[]
      */
-    public function getExistingUsernames(array $usernames): array;
+    public function getExistingUserIdentifiers(array $usernames): array;
 
     /**
      * Find entities by usernames.

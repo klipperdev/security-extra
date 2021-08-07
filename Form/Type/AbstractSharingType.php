@@ -197,7 +197,7 @@ abstract class AbstractSharingType extends AbstractType
 
                     if ($identity instanceof UserInterface) {
                         $identityConstraints = [new NotBlank()];
-                        $identityName = $identity->getUsername();
+                        $identityName = $identity->getUserIdentifier();
                         $invitation = $identity->getEmail();
                     } else {
                         $identityConstraints = [new NotBlank(), new Email()];
