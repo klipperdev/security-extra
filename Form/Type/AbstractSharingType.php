@@ -188,7 +188,7 @@ abstract class AbstractSharingType extends AbstractType
                     if (\is_string($identity)) {
                         /** @var UserRepositoryInterface $repoUser */
                         $repoUser = $domainUser->getRepository();
-                        $foundUsers = $repoUser->findByUsernameOrHavingEmails([$identity]);
+                        $foundUsers = $repoUser->findByUserIdentifierOrHavingEmails([$identity]);
 
                         if (isset($foundUsers[0]) && $foundUsers[0] instanceof UserInterface) {
                             $identity = $foundUsers[0];

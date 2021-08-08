@@ -35,22 +35,22 @@ trait UserRepositoryTrait
     /**
      * @see UserRepositoryInterface::getExistingUserIdentifiers
      */
-    public function getExistingUserIdentifiers(array $usernames): array
+    public function getExistingUserIdentifiers(array $userIdentifiers): array
     {
-        $usernames[] = 'baz-42';
+        $userIdentifiers[] = 'baz-42';
         $res = [];
         $items = array_merge(
             $this->createQueryBuilder('u')
                 ->select('u.username')
                 ->andWhere('u.username IN (:usernames)')
-                ->setParameter('usernames', $usernames)
+                ->setParameter('usernames', $userIdentifiers)
                 ->getQuery()
                 ->getResult(),
             $this->_em->createQueryBuilder()
                 ->select('o.name as username')
                 ->from(OrganizationInterface::class, 'o')
                 ->andWhere('o.name IN (:usernames)')
-                ->setParameter('usernames', $usernames)
+                ->setParameter('usernames', $userIdentifiers)
                 ->getQuery()
                 ->getResult()
         );
@@ -67,36 +67,44 @@ trait UserRepositoryTrait
      *
      * @param mixed $username
      */
-    public function loadUserByUsername($username): ?UserInterface
+    public function loadUserByUsername(string $username): ?UserInterface
     {
-        $res = $this->findByUsernames([$username]);
+        return $this->loadUserByIdentifier($username);
+    }
+
+    /**
+     *@see UserLoaderInterface::loadUserByIdentifier()
+     */
+    public function loadUserByIdentifier(string $identifier): ?UserInterface
+    {
+        $res = $this->findByUserIdentifiers([$identifier]);
 
         return 1 === \count($res) ? $res[0] : null;
     }
 
     /**
-     * @see UserRepositoryInterface::findByUsernames
+     * @see UserRepositoryInterface::findByUserIdentifiers
      */
-    public function findByUsernames(array $usernames): array
+    public function findByUserIdentifiers(array $userIdentifiers): array
     {
         $qb = $this->createQueryBuilder('u')
             ->select('u')
             ->andWhere('u.username IN (:usernames)')
-            ->setParameter('usernames', $usernames)
+            ->setParameter('usernames', $userIdentifiers)
         ;
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * @see UserRepositoryInterface::findByUsernameOrHavingEmails
+     * @see UserRepositoryInterface::findByUserIdentifierOrHavingEmails
      */
-    public function findByUsernameOrHavingEmails(array $usernames): array
+    public function findByUserIdentifierOrHavingEmails(array $userIdentifiers): array
     {
         $qb = $this->createQueryBuilder('u')
             ->select('u')
             ->andWhere('u.username IN (:usernames) OR e.email IN (:usernames)')
-            ->setParameter('usernames', $usernames)
+            ->setParameter('usernames', $userIdentifiers)
         ;
 
         return $qb->getQuery()->getResult();

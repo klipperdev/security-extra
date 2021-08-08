@@ -23,29 +23,29 @@ use Klipper\Component\Security\Model\UserInterface;
 interface UserRepositoryInterface extends ObjectRepository, InsensitiveRepositoryInterface
 {
     /**
-     * Get the existing usernames.
+     * Get the existing user identifiers.
      *
-     * @param string[] $usernames The usernames
+     * @param string[] $userIdentifiers The user identifiers
      *
      * @return string[]
      */
-    public function getExistingUserIdentifiers(array $usernames): array;
+    public function getExistingUserIdentifiers(array $userIdentifiers): array;
 
     /**
-     * Find entities by usernames.
+     * Find entities by user identifiers.
      *
-     * @param string[] $usernames The usernames
+     * @param string[] $userIdentifiers The user identifiers
      *
      * @return UserInterface[]
      */
-    public function findByUsernames(array $usernames): array;
+    public function findByUserIdentifiers(array $userIdentifiers): array;
 
     /**
-     * Find the user by username of having emails.
+     * Find the user by user identifier of having emails.
      *
-     * @param string[] $usernames The username of emails
+     * @param string[] $userIdentifiers The user identifier of emails
      *
      * @return UserInterface[]
      */
-    public function findByUsernameOrHavingEmails(array $usernames): array;
+    public function findByUserIdentifierOrHavingEmails(array $userIdentifiers): array;
 }
