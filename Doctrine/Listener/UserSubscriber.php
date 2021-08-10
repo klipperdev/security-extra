@@ -139,8 +139,8 @@ class UserSubscriber implements EventSubscriber
         $emails = [];
 
         foreach ($users as $user) {
-            $email = $user->getEmail();
-            $emails[$email] = str_replace(strrchr($email, '@'), '', $email);
+            $email = strtolower($user->getEmail());
+            $emails[$email] = strtolower(str_replace(strrchr($email, '@'), '', $email));
         }
 
         /** @var UserRepositoryInterface $userRepo */
@@ -150,7 +150,7 @@ class UserSubscriber implements EventSubscriber
 
         foreach ($users as $user) {
             $oldUsername = $user->getUserIdentifier();
-            $username = $emails[$user->getEmail()];
+            $username = $emails[strtolower($user->getEmail())];
 
             if (\in_array($username, $existingUserIdentifiers, true)) {
                 $username = uniqid($username, false);

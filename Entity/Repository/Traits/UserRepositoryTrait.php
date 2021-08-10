@@ -42,21 +42,21 @@ trait UserRepositoryTrait
         $items = array_merge(
             $this->createQueryBuilder('u')
                 ->select('u.username')
-                ->andWhere('u.username IN (:usernames)')
+                ->andWhere('LOWER(u.username) IN (:usernames)')
                 ->setParameter('usernames', $userIdentifiers)
                 ->getQuery()
                 ->getResult(),
             $this->_em->createQueryBuilder()
                 ->select('o.name as username')
                 ->from(OrganizationInterface::class, 'o')
-                ->andWhere('o.name IN (:usernames)')
+                ->andWhere('LOWER(o.name) IN (:usernames)')
                 ->setParameter('usernames', $userIdentifiers)
                 ->getQuery()
                 ->getResult()
         );
 
         foreach ($items as $item) {
-            $res[] = $item['username'];
+            $res[] = strtolower($item['username']);
         }
 
         return $res;
