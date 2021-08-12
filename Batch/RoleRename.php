@@ -212,7 +212,7 @@ class RoleRename
 
         $qb
             ->where('uo.roles LIKE :role')
-            ->setParameter('role', '%'.$platform->quoteIdentifier($roleName).'%')
+            ->setParameter('role', '%"'.$roleName.'"%')
             ->setMaxResults($this->getBatchSize($batchSize))
         ;
     }
