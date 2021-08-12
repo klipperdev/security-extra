@@ -170,6 +170,9 @@ class UserSubscriber implements EventSubscriber
                     $userOrg->setLabel($username);
                     $uow->propertyChanged($user, 'label', $oldOrgLabel, $userOrg->getLabel());
                 }
+
+                $meta = $em->getClassMetadata(ClassUtils::getClass($userOrg));
+                $uow->recomputeSingleEntityChangeSet($meta, $userOrg);
             }
         }
     }
