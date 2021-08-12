@@ -26,13 +26,14 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 class SharingIdentityRenameSubscriber implements EventSubscriber
 {
-    /**
-     * @var SharingIdentityRenameMessage[]
-     */
-    protected array $renameMessages = [];
     private SharingManagerInterface $sharingManager;
 
     private MessageBusInterface $messageBus;
+
+    /**
+     * @var SharingIdentityRenameMessage[]
+     */
+    private array $renameMessages = [];
 
     public function __construct(
         SharingManagerInterface $sharingManager,

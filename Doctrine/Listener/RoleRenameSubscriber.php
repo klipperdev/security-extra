@@ -24,12 +24,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 class RoleRenameSubscriber implements EventSubscriber
 {
-    protected MessageBusInterface $messageBus;
+    private MessageBusInterface $messageBus;
 
     /**
      * @var RoleRenameMessage[]
      */
-    protected array $renameRoles = [];
+    private array $renameMessages = [];
 
     public function __construct(MessageBusInterface $messageBus)
     {
@@ -54,7 +54,7 @@ class RoleRenameSubscriber implements EventSubscriber
                 $changeSet = $uow->getEntityChangeSet($entity);
 
                 if (isset($changeSet['name'])) {
-                    $this->renameRoles[] = new RoleRenameMessage(
+                    $this->renameMessages[] = new RoleRenameMessage(
                         $changeSet['name'][0],
                         $changeSet['name'][1],
                         $entity instanceof OrganizationalInterface ? $entity->getOrganizationId() : null
@@ -66,10 +66,10 @@ class RoleRenameSubscriber implements EventSubscriber
 
     public function postFlush(): void
     {
-        foreach ($this->renameRoles as $renameRole) {
-            $this->messageBus->dispatch($renameRole);
+        foreach ($this->renameMessages as $message) {
+            $this->messageBus->dispatch($message);
         }
 
-        $this->renameRoles = [];
+        $this->renameMessages = [];
     }
 }
