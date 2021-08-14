@@ -43,14 +43,24 @@ class UserSubscriber implements EventSubscriber
 
     protected ObjectFactoryInterface $objectFactory;
 
+    /**
+     * @var string[]
+     */
+    protected array $organizationDefaultRoles;
+
+    /**
+     * @param string[] $organizationDefaultRoles
+     */
     public function __construct(
         TranslatorInterface $translator,
         ValidatorInterface $validator,
-        ObjectFactoryInterface $objectFactory
+        ObjectFactoryInterface $objectFactory,
+        array $organizationDefaultRoles = []
     ) {
         $this->translator = $translator;
         $this->validator = $validator;
         $this->objectFactory = $objectFactory;
+        $this->organizationDefaultRoles = $organizationDefaultRoles;
     }
 
     public function getSubscribedEvents(): array
@@ -191,7 +201,9 @@ class UserSubscriber implements EventSubscriber
             $org->setUser($entity);
 
             if ($org instanceof RoleableInterface) {
-                $org->addRole('ROLE_ADMIN');
+                foreach ($this->organizationDefaultRoles as $defaultRole) {
+                    $org->addRole($defaultRole);
+                }
             }
 
             ListenerUtil::validateEntity($this->validator, $entity);
