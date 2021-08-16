@@ -30,7 +30,7 @@ use Klipper\Component\SecurityExtra\Entity\Repository\OrganizationUserRepository
  *
  * @see OrganizationUserRepositoryInterface
  *
- * @method QueryBuilder  createQueryBuilder(string $alias)
+ * @method QueryBuilder  createQueryBuilder(string $alias, $indexBy = null)
  * @method ClassMetadata getClassMetadata()
  */
 trait OrganizationUserRepositoryTrait
