@@ -118,8 +118,10 @@ class OrganizationalContextHelper
             $this->setCurrentOrganizationUser($org);
         }
 
-        if (null !== $this->tokenStorage->getToken()
-                && null === $this->context->getCurrentOrganizationUser()) {
+        if (0 !== strpos(($attr->get('_route', '')), '_')
+            && null !== $this->tokenStorage->getToken()
+            && null === $this->context->getCurrentOrganizationUser()
+        ) {
             throw new NotFoundHttpException();
         }
     }
