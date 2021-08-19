@@ -43,10 +43,19 @@ trait OrganizationUserRepositoryTrait
         $userOrg = null;
 
         if ($user instanceof UserInterface) {
-            $result = $this->createQueryBuilder('uo')
+            $qb = $this->createQueryBuilder('uo')
                 ->addSelect('o, u, g')
                 ->where('uo.user = :userId')
                 ->andWhere('o.name = :organizationName')
+            ;
+
+            $orgUserMeta = $this->getEntityManager()->getClassMetadata(OrganizationUserInterface::class);
+
+            if ($orgUserMeta->hasField('enabled')) {
+                $qb->andWhere('uo.enabled = true');
+            }
+
+            $result = $qb
                 ->leftJoin('uo.organization', 'o', Join::WITH, 'o.id = uo.organization')
                 ->leftJoin('uo.user', 'u', Join::WITH, 'u.id = uo.user')
                 ->leftJoin('uo.groups', 'g', Join::WITH, 'g.organization = uo.organization')
