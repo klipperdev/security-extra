@@ -26,13 +26,14 @@ use Twig\TwigFunction;
  */
 class OrganizationalContextExtension extends AbstractExtension
 {
-    /**
-     * @var null|OrganizationUserInterface[]
-     */
-    protected ?array $cacheOrganizations = null;
     private EntityManagerInterface $em;
 
     private ?OrganizationalContextInterface $orgContext;
+
+    /**
+     * @var null|OrganizationUserInterface[]
+     */
+    private ?array $cacheOrganizations = null;
 
     public function __construct(
         EntityManagerInterface $em,
