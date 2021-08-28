@@ -131,7 +131,7 @@ class OrganizationalContextHelper
      *
      * @param string $organizationName The current organization name
      */
-    public function getCurrentOrganizationUser(string $organizationName): ?OrganizationUserInterface
+    public function getCurrentOrganizationUser(?string $organizationName): ?OrganizationUserInterface
     {
         $orgUser = null;
 
