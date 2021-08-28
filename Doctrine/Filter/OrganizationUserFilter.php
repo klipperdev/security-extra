@@ -31,7 +31,7 @@ class OrganizationUserFilter extends AbstractFilter
      */
     public function setCurrentOrganizations(bool $isCurrentOrganizations): void
     {
-        $this->setParameter('is_current_organizations', (bool) $isCurrentOrganizations, 'boolean');
+        $this->setParameter('is_current_organizations', $isCurrentOrganizations, 'boolean');
     }
 
     /**
