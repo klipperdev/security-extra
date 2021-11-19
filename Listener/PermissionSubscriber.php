@@ -14,10 +14,8 @@ namespace Klipper\Component\SecurityExtra\Listener;
 use Klipper\Component\Security\Event\CheckPermissionEvent;
 use Klipper\Component\Security\Identity\SubjectIdentityInterface;
 use Klipper\Component\Security\Model\Traits\OrganizationalOptionalInterface;
-use Klipper\Component\Security\Model\Traits\RoleableInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -26,16 +24,12 @@ class PermissionSubscriber implements EventSubscriberInterface
 {
     protected RequestStack $requestStack;
 
-    protected TokenStorageInterface $tokenStorage;
-
     /**
-     * @param RequestStack          $requestStack The request stack
-     * @param TokenStorageInterface $tokenStorage The token storage
+     * @param RequestStack $requestStack The request stack
      */
-    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage)
+    public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
-        $this->tokenStorage = $tokenStorage;
     }
 
     public static function getSubscribedEvents(): array
@@ -54,21 +48,11 @@ class PermissionSubscriber implements EventSubscriberInterface
      */
     public function onCheckPermission(CheckPermissionEvent $event): void
     {
-        if ($this->isSuperAdmin()) {
-            $event->setGranted(true);
-        } elseif (!$this->isAdminSection()
+        if (!$this->isAdminSection()
                 && $this->isSystemSubject($event->getSubject())
                 && !\in_array($event->getOperation(), ['view', 'read'], true)) {
             $event->setGranted(false);
         }
-    }
-
-    private function isSuperAdmin(): bool
-    {
-        $token = $this->tokenStorage->getToken();
-
-        return null !== $token && $token->getUser() instanceof RoleableInterface
-            && $token->getUser()->hasRole('ROLE_SUPER_ADMIN');
     }
 
     /**
@@ -78,7 +62,7 @@ class PermissionSubscriber implements EventSubscriberInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        return null === $request || (null !== $request && $request->attributes->get('_admin_section', false));
+        return null === $request || $request->attributes->get('_admin_section', false);
     }
 
     /**
