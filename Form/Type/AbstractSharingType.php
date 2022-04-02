@@ -75,8 +75,10 @@ abstract class AbstractSharingType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) use ($options, $domainManager): void {
                 $dataIdentityName = null;
                 $form = $event->getForm();
+
                 /** @var null|SharingInterface $sharing */
                 $sharing = $event->getData();
+
                 /** @var \stdClass $config */
                 $config = $form->getConfig()->getAttribute('sharing_config');
                 $config->identityType = $options['identity_type'];
@@ -149,6 +151,7 @@ abstract class AbstractSharingType extends AbstractType
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options): void {
                 /** @var SharingInterface $sharing */
                 $sharing = $event->getData();
+
                 /** @var IdInterface $subject */
                 $subject = $options['subject'];
                 $form = $event->getForm();
@@ -159,6 +162,7 @@ abstract class AbstractSharingType extends AbstractType
 
                 $identityForm = $form->get('identity');
                 $identityType = $form->get('identity_type')->getData();
+
                 /** @var null|ArrayCollection $data */
                 $data = $identityForm->getData();
 

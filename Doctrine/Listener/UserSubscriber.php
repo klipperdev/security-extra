@@ -105,6 +105,7 @@ class UserSubscriber implements EventSubscriber
     {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
+
         /** @var UserInterface[] $generateUsernames */
         $generateUsernames = [];
         $existingOrgNames = [];

@@ -264,6 +264,7 @@ class OrganizationUserSubscriber implements EventSubscriber
     {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
+
         /** @var OrganizationUserInterface[] $deleted */
         $deleted = [];
         $deletedOrgIds = [];
