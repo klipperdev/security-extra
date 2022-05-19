@@ -11,7 +11,9 @@
 
 namespace Klipper\Component\SecurityExtra\Listener;
 
+use Klipper\Component\Resource\Event\PostCreatesEvent;
 use Klipper\Component\Resource\Event\PostDeletesEvent;
+use Klipper\Component\Resource\Event\PreCreatesEvent;
 use Klipper\Component\Resource\Event\PreDeletesEvent;
 use Klipper\Component\Security\Model\OrganizationInterface;
 use Klipper\Component\Security\Permission\PermissionManagerInterface;
@@ -37,6 +39,12 @@ class DomainOrganizationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            PreCreatesEvent::class => [
+                ['onPreCreate', 0],
+            ],
+            PostCreatesEvent::class => [
+                ['onPostCreate', 0],
+            ],
             PreDeletesEvent::class => [
                 ['onPreDelete', 0],
             ],
@@ -47,9 +55,28 @@ class DomainOrganizationSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * Disable the permission manager before creates.
+     */
+    public function onPreCreate(PreCreatesEvent $event): void
+    {
+        if ($event->is(OrganizationInterface::class)) {
+            $this->pmEnabled = $this->permissionManager->isEnabled();
+            $this->permissionManager->setEnabled(false);
+        }
+    }
+
+    /**
+     * Disable the permission manager before creates.
+     */
+    public function onPostCreate(PostCreatesEvent $event): void
+    {
+        if ($event->is(OrganizationInterface::class)) {
+            $this->permissionManager->setEnabled($this->pmEnabled);
+        }
+    }
+
+    /**
      * Disable the permission manager before deletes.
-     *
-     * @param PreDeletesEvent $event The event
      */
     public function onPreDelete(PreDeletesEvent $event): void
     {
@@ -61,8 +88,6 @@ class DomainOrganizationSubscriber implements EventSubscriberInterface
 
     /**
      * Disable the permission manager before deletes.
-     *
-     * @param PostDeletesEvent $event The event
      */
     public function onPostDelete(PostDeletesEvent $event): void
     {
