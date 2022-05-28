@@ -24,6 +24,8 @@ use Klipper\Component\SecurityExtra\Sharing\SharingEntryInterface;
  */
 class SharingEntrySerializerSubscriber implements EventSubscriberInterface
 {
+    private array $cache = [];
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -48,14 +50,19 @@ class SharingEntrySerializerSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $classMeta = $event->getContext()->getMetadataFactory()->getMetadataForClass(ClassUtils::getClass($object));
+        $class = ClassUtils::getClass($object);
 
-        if (null !== $classMeta && isset($classMeta->propertyMetadata['permissions'])) {
-            /** @var PropertyMetadata $propertyMeta */
-            $propertyMeta = $classMeta->propertyMetadata['permissions'];
+        if (!\in_array($class, $this->cache, true)) {
+            $this->cache[] = $class;
+            $classMeta = $event->getContext()->getMetadataFactory()->getMetadataForClass($class);
 
-            if (null === $propertyMeta->type['name']) {
-                $propertyMeta->type['name'] = PermissionCollection::class;
+            if (null !== $classMeta && isset($classMeta->propertyMetadata['permissions'])) {
+                /** @var PropertyMetadata $propertyMeta */
+                $propertyMeta = $classMeta->propertyMetadata['permissions'];
+
+                if (null === $propertyMeta->type['name']) {
+                    $propertyMeta->type['name'] = PermissionCollection::class;
+                }
             }
         }
     }
