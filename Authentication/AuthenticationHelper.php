@@ -45,6 +45,6 @@ class AuthenticationHelper
     {
         $token = $this->tokenStorage->getToken();
 
-        return $token instanceof UsernamePasswordToken && !$this->trustResolver->isAnonymous($token);
+        return $token instanceof UsernamePasswordToken && $this->trustResolver->isAuthenticated($token);
     }
 }
