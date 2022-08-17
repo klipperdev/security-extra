@@ -55,7 +55,7 @@ class GroupSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if (!$entity instanceof GroupInterface) {
             return;

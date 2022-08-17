@@ -57,7 +57,7 @@ class RoleSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if (!$entity instanceof RoleInterface) {
             return;

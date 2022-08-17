@@ -59,7 +59,7 @@ class OrganizationalSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
         $currentOrg = $this->context->getCurrentOrganization();
 
         if ($entity instanceof OrganizationalRequiredInterface

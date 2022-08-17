@@ -35,7 +35,7 @@ class RoleableSubscriber implements EventSubscriber
      */
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $this->formatOrganizationRoleNames($args->getEntity());
+        $this->formatOrganizationRoleNames($args->getObject());
     }
 
     /**
@@ -43,7 +43,7 @@ class RoleableSubscriber implements EventSubscriber
      */
     public function preUpdate(LifecycleEventArgs $args): void
     {
-        $this->formatOrganizationRoleNames($args->getEntity());
+        $this->formatOrganizationRoleNames($args->getObject());
     }
 
     /**

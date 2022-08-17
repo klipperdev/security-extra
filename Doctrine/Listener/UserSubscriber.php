@@ -77,7 +77,7 @@ class UserSubscriber implements EventSubscriber
      */
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if ($entity instanceof UserInterface) {
             $this->createOrganization($entity);
@@ -89,7 +89,7 @@ class UserSubscriber implements EventSubscriber
      */
     public function preUpdate(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
         $em = $args->getObjectManager();
         $uow = $em->getUnitOfWork();
 

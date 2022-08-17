@@ -70,7 +70,7 @@ class OrganizationSubscriber implements EventSubscriber
      */
     public function prePersist(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if ($entity instanceof OrganizationInterface) {
             $this->updateNameLabelField($entity);
@@ -86,7 +86,7 @@ class OrganizationSubscriber implements EventSubscriber
      */
     public function preUpdate(LifecycleEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
         $uow = $args->getObjectManager()->getUnitOfWork();
 
         if ($entity instanceof OrganizationInterface) {
