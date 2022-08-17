@@ -21,7 +21,7 @@
         "klipper/model": "^2.0.0",
         "klipper/object": "^2.0.0",
         "klipper/uuid": "^2.0.0",
-        "doctrine/orm": "^2.8.0",
+        "doctrine/orm": "^2.13.0",
         "klipper/config": "^2.0.0",
         "klipper/doctrine-extensions": "^2.0.0",
         "klipper/doctrine-extra": "^2.0.0",
