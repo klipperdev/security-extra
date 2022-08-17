@@ -118,7 +118,7 @@ class OrganizationalContextHelper
             $this->setCurrentOrganizationUser($org);
         }
 
-        if (0 !== strpos(($attr->get('_route', '')), '_')
+        if (0 !== strpos($attr->get('_route', ''), '_')
             && null !== $this->tokenStorage->getToken()
             && null === $this->context->getCurrentOrganizationUser()
         ) {

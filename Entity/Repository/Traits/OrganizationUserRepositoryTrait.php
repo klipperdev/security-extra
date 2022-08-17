@@ -62,9 +62,9 @@ trait OrganizationUserRepositoryTrait
                 ->setParameter('userId', $user->getId())
                 ->setParameter('organizationName', $organizationName)
                 ->getQuery()
-                //->setCacheable(true)
-                //->setCacheMode(Cache::MODE_GET)
-                //->setResultCacheId(sha1('user_org_'.$user->getId().'__'.$organizationName))
+                // ->setCacheable(true)
+                // ->setCacheMode(Cache::MODE_GET)
+                // ->setResultCacheId(sha1('user_org_'.$user->getId().'__'.$organizationName))
                 ->getResult()
             ;
 
