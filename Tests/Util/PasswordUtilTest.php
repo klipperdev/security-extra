@@ -19,9 +19,6 @@ use PHPUnit\Framework\TestCase;
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  *
- * @group klipper
- * @group klipper-security-extra
- *
  * @internal
  */
 final class PasswordUtilTest extends TestCase
