@@ -87,7 +87,7 @@ class OrganizationSubscriber implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
-        $uow = $args->getEntityManager()->getUnitOfWork();
+        $uow = $args->getObjectManager()->getUnitOfWork();
 
         if ($entity instanceof OrganizationInterface) {
             $this->updateNameLabelField($entity);

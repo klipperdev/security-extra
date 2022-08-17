@@ -78,7 +78,7 @@ class OrganizationUserSubscriber implements EventSubscriber
         /** @var OrganizationUserInterface[] $uos */
         $uos = [];
         $uoIds = [];
-        $em = $args->getEntityManager();
+        $em = $args->getObjectManager();
         $uow = $em->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
@@ -124,7 +124,7 @@ class OrganizationUserSubscriber implements EventSubscriber
      */
     protected function validateUpdates(OnFlushEventArgs $args, array &$errors): void
     {
-        $em = $args->getEntityManager();
+        $em = $args->getObjectManager();
         $uow = $em->getUnitOfWork();
         $demoteAdmins = [];
         $disabledAdmins = [];
@@ -262,7 +262,7 @@ class OrganizationUserSubscriber implements EventSubscriber
      */
     protected function validateDeletions(OnFlushEventArgs $args, array &$errors): void
     {
-        $em = $args->getEntityManager();
+        $em = $args->getObjectManager();
         $uow = $em->getUnitOfWork();
 
         /** @var OrganizationUserInterface[] $deleted */
