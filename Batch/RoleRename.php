@@ -208,8 +208,6 @@ class RoleRename
      */
     protected function injectRole(QueryBuilder $qb, string $roleName, ?int $batchSize = null): void
     {
-        $platform = $qb->getEntityManager()->getConnection()->getDatabasePlatform();
-
         $qb
             ->where('uo.roles LIKE :role')
             ->setParameter('role', '%"'.$roleName.'"%')
