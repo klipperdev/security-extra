@@ -34,7 +34,7 @@ class UsernameSameOrgName extends Constraint
         return $this->service;
     }
 
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

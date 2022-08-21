@@ -24,7 +24,7 @@ class Sharing extends Constraint
 {
     public string $message = 'sharing.manipulation.access_deny';
 
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }
