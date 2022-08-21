@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Klipper\Component\SecurityExtra\Http\Firewall;
+namespace Klipper\Component\SecurityExtra\Firewall;
 
 use Klipper\Component\SecurityExtra\Helper\OrganizationalContextHelper;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-class OrganizationalContextListener
+class OrganizationalContextFirewallListener
 {
     protected OrganizationalContextHelper $helper;
 

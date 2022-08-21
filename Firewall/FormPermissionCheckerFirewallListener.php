@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Klipper\Component\SecurityExtra\Http\Firewall;
+namespace Klipper\Component\SecurityExtra\Firewall;
 
 use Klipper\Component\SecurityExtra\Form\Extension\PermissionCheckerTypeExtension;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-class FormPermissionCheckerListener
+class FormPermissionCheckerFirewallListener
 {
     protected PermissionCheckerTypeExtension $typeExtension;
 
