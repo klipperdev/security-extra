@@ -51,7 +51,7 @@ class IsReservedNameValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        if (\in_array(mb_strtolower($value), $this->globalReservedNames, false)) {
+        if (\in_array(mb_strtolower((string) $value), $this->globalReservedNames, false)) {
             $msg = $constraint->message;
             $params = ['%name%' => $value];
             $violation = new ConstraintViolation(
