@@ -122,7 +122,7 @@ trait OrganizationUserRepositoryTrait
             ->where('uo.organization IN (:orgIds)')
             ->andWhere('uo.roles LIKE :role')
             ->setParameter('orgIds', $organizationsIds)
-            ->setParameter('role', '%"'.'ROLE_ADMIN'.'"%')
+            ->setParameter('role', '%"ROLE_ADMIN"%')
             ->getQuery()->getResult()
         ;
         SqlFilterUtil::enableFilters($em, $filters);

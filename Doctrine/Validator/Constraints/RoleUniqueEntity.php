@@ -19,6 +19,7 @@ use Klipper\Component\DoctrineExtensions\Validator\Constraints\UniqueEntity;
  * @author François Pluchino <francois.pluchino@klipper.dev>
  *
  * @Annotation
+ *
  * @Target({"CLASS", "ANNOTATION"})
  */
 class RoleUniqueEntity extends UniqueEntity

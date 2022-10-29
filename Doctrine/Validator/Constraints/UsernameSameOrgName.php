@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraint;
  * @author François Pluchino <francois.pluchino@klipper.dev>
  *
  * @Annotation
+ *
  * @Target({"CLASS", "ANNOTATION"})
  */
 class UsernameSameOrgName extends Constraint

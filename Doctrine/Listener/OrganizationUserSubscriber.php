@@ -96,7 +96,7 @@ class OrganizationUserSubscriber implements EventSubscriber
                 ->leftJoin(OrganizationInterface::class, 'o', Join::WITH, 'o.id = uo.organization')
                 ->where('uo.roles LIKE :role')
                 ->andWhere('o.id IS NOT NULL')
-                ->setParameter('role', '%"'.'ROLE_ADMIN'.'"%')
+                ->setParameter('role', '%"ROLE_ADMIN"%')
                 ->groupBy('o.id')
             ;
 
@@ -183,7 +183,7 @@ class OrganizationUserSubscriber implements EventSubscriber
             ->andWhere('o.id IS NOT NULL')
             ->andWhere('o.id IN(:oids)')
             ->setParameter('ids', array_keys($orgUsers))
-            ->setParameter('role', '%"'.'ROLE_ADMIN'.'"%')
+            ->setParameter('role', '%"ROLE_ADMIN"%')
             ->setParameter('oids', $orgIds)
             ->groupBy('o.id')
         ;
@@ -230,7 +230,7 @@ class OrganizationUserSubscriber implements EventSubscriber
             ->andWhere('o.id IS NOT NULL')
             ->andWhere('o.id IN(:oids)')
             ->setParameter('ids', array_keys($orgUsers))
-            ->setParameter('role', '%"'.'ROLE_ADMIN'.'"%')
+            ->setParameter('role', '%"ROLE_ADMIN"%')
             ->setParameter('oids', $orgIds)
             ->groupBy('o.id')
         ;
@@ -296,7 +296,7 @@ class OrganizationUserSubscriber implements EventSubscriber
                 ->andWhere('o.id IN(:oids)')
                 ->setParameter('ids', array_keys($deleted))
                 ->setParameter('oids', array_keys($deletedOrgIds))
-                ->setParameter('role', '%"'.'ROLE_ADMIN'.'"%')
+                ->setParameter('role', '%"ROLE_ADMIN"%')
                 ->groupBy('o.id')
             ;
 
