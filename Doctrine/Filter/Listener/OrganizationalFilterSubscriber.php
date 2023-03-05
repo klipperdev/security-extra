@@ -72,6 +72,7 @@ class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
     protected function injectParameters(SQLFilter $filter): void
     {
         $this->init();
+        $userOrg = $this->orgContext->getCurrentOrganizationUser();
         $org = $this->orgContext->getCurrentOrganization();
         $orgId = null !== $org
             ? $org->getId()
@@ -79,6 +80,9 @@ class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
         $orgUserId = null !== $org && null !== $org->getUser()
             ? $org->getUser()->getId()
             : DoctrineUtils::getMockZeroId($this->entityManager->getClassMetadata(UserInterface::class));
+        $multiOrgsUserId = null !== $userOrg && null !== $userOrg->getUser()
+            ? $userOrg->getUser()->getId()
+            : $orgUserId;
 
         $filter->setParameter('excluded_entities', [], 'array');
         $filter->setParameter('excluded_classes', $this->excludedClasses, 'array');
@@ -89,6 +93,8 @@ class OrganizationalFilterSubscriber extends AbstractFilterSubscriber
         $filter->setParameter('organization_id', $orgId, \is_string($orgId) && !is_numeric($orgId) ? Types::GUID : null);
         $filter->setParameter('organization_user_id', $orgUserId, \is_string($orgUserId) && !is_numeric($orgUserId) ? Types::GUID : null);
         $filter->setParameter('context_optional_filter_type', $this->orgContext->getOptionalFilterType());
+        $filter->setParameter('is_multi_organizations', false, 'boolean');
+        $filter->setParameter('multi_organizations_user_id', $multiOrgsUserId, \is_string($multiOrgsUserId) && !is_numeric($multiOrgsUserId) ? Types::GUID : null);
     }
 
     /**

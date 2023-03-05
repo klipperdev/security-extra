@@ -44,6 +44,11 @@ class OrganizationalFilter extends AbstractFilter
         $this->setParameter('excluded_entities', [], 'array');
     }
 
+    public function setMultiOrganizations(bool $multiOrganizations): void
+    {
+        $this->setParameter('is_multi_organizations', $multiOrganizations, 'boolean');
+    }
+
     /**
      * @throws
      */
@@ -72,8 +77,11 @@ class OrganizationalFilter extends AbstractFilter
 
         if (!$this->isRequiredOrganizationalEntity($targetEntity)) {
             $addCondSql = $this->filterOptionalOrganizationEntity($targetEntity, $targetTableAlias, $addCondSql);
+        } elseif ($this->hasParameter('is_multi_organizations') && $this->getRealParameter('is_multi_organizations')) {
+            $orgIds = $this->buildUserOrganizationsQuery($this->getRealParameter('multi_organizations_user_id'));
+            $addCondSql = "({$addCondSql}) OR {$targetTableAlias}.{$column} IN ({$orgIds})";
         } elseif ($this->getRealParameter('is_user_organization') && $this->isUserExcludedOrgsClass($targetEntity)) {
-            $orgIds = $this->buildUserOrganizationsQuery();
+            $orgIds = $this->buildUserOrganizationsQuery($this->getParameter('organization_user_id'));
             $addCondSql = "({$addCondSql}) OR {$targetTableAlias}.{$column} NOT IN ({$orgIds})";
         }
 
@@ -85,7 +93,7 @@ class OrganizationalFilter extends AbstractFilter
      *
      * @throws
      */
-    protected function buildUserOrganizationsQuery(): string
+    protected function buildUserOrganizationsQuery(string|int $userId): string
     {
         $uoMeta = $this->getEntityManager()->getClassMetadata(OrganizationUserInterface::class);
         $tbName = $uoMeta->getTableName();
@@ -94,7 +102,7 @@ class OrganizationalFilter extends AbstractFilter
         $userMapping = $uoMeta->getAssociationMapping('user');
         $tbUserName = $userMapping['joinColumns'][0]['name'];
 
-        return sprintf('SELECT %s FROM %s uo WHERE uo.%s = %s', $id, $tbName, $tbUserName, $this->getParameter('organization_user_id'));
+        return sprintf('SELECT %s FROM %s uo WHERE uo.%s = %s AND uo.enabled IS TRUE', $id, $tbName, $tbUserName, $userId);
     }
 
     /**
